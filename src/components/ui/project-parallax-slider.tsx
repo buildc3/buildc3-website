@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, ChevronUp, ChevronDown } from "lucide-react";
 import type { Project } from "@/types/database";
 
 interface ProjectParallaxSliderProps {
@@ -181,6 +181,20 @@ export function ProjectParallaxSlider({
     requestRef.current = requestAnimationFrame(animationLoop);
   };
 
+  const goToProject = React.useCallback((direction: 'prev' | 'next') => {
+    const s = state.current;
+    const currentIndex = Math.round(-s.targetY / s.projectHeight);
+    const targetIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+    const target = -targetIndex * s.projectHeight;
+    s.isSnapping = true;
+    s.snapStart = {
+      time: Date.now(),
+      y: s.targetY,
+      target: target,
+    };
+    s.lastScrollTime = Date.now();
+  }, []);
+
   React.useEffect(() => {
     state.current.projectHeight = window.innerHeight;
     state.current.currentY = -startIndex * window.innerHeight;
@@ -254,6 +268,10 @@ export function ProjectParallaxSlider({
   }
 
   const activeProject = projects[activeIndex] ?? null;
+  const activeNum = getProjectNumber(activeIndex);
+  const activeYear = activeProject
+    ? new Date(activeProject.created_at).getFullYear().toString()
+    : "";
 
   return (
     <div className="parallax-container">
@@ -280,22 +298,38 @@ export function ProjectParallaxSlider({
         )}
       </div>
 
-      {/* Active Project Title Overlay */}
-      <div className="parallax-overlay-bottom">
-        {activeProject && (
-          <div className="parallax-active-info">
-            <h1 className="parallax-active-title">{activeProject.title}</h1>
-            {activeProject.description && (
-              <p className="parallax-active-desc">{activeProject.description}</p>
-            )}
-            {activeProject.category && (
-              <span className="parallax-active-badge">
-                {activeProject.category.name}
+      {/* Centered Info Card Overlay */}
+      {activeProject && (
+        <div className="parallax-info-card">
+          <div className="parallax-info-card-inner">
+            {/* Row 1: Number + Title */}
+            <div className="parallax-info-row">
+              <span className="parallax-info-num">{activeNum}</span>
+              <span className="parallax-info-title">{activeProject.title.toUpperCase()}</span>
+            </div>
+
+            {/* Row 2: Category + Thumbnail + Year */}
+            <div className="parallax-info-middle">
+              <span className="parallax-info-category">
+                {activeProject.category?.name?.toUpperCase() ?? ""}
               </span>
+              <div className="parallax-info-thumb">
+                {activeProject.thumbnail_url && (
+                  <img src={activeProject.thumbnail_url} alt={activeProject.title} />
+                )}
+              </div>
+              <span className="parallax-info-year">{activeYear}</span>
+            </div>
+
+            {/* Row 3: Description */}
+            {activeProject.description && (
+              <div className="parallax-info-desc">
+                {activeProject.description.toUpperCase()}
+              </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Project Images */}
       <ul className="project-list">
@@ -323,71 +357,22 @@ export function ProjectParallaxSlider({
         })}
       </ul>
 
-      {/* Minimap */}
-      <div className="minimap">
-        <div className="minimap-wrapper">
-          <div className="minimap-img-preview">
-            {indices.map((i) => {
-              const data = getProjectData(i);
-              if (!data) return null;
-              return (
-                <div
-                  key={i}
-                  className="minimap-img-item"
-                  ref={(el) => {
-                    if (el) minimapRef.current.set(i, el);
-                    else minimapRef.current.delete(i);
-                  }}
-                >
-                  {data.thumbnail_url ? (
-                    <img src={data.thumbnail_url} alt={data.title} />
-                  ) : (
-                    <div className="minimap-placeholder" />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <div className="minimap-info-list">
-            {indices.map((i) => {
-              const data = getProjectData(i);
-              if (!data) return null;
-              const num = getProjectNumber(i);
-              return (
-                <div
-                  key={i}
-                  className="minimap-item-info"
-                  ref={(el) => {
-                    if (el) infoRef.current.set(i, el);
-                    else infoRef.current.delete(i);
-                  }}
-                >
-                  <div className="minimap-item-info-row">
-                    <p>{num}</p>
-                    <p>{data.title}</p>
-                  </div>
-                  <div className="minimap-item-info-row">
-                    <p>{data.category?.name ?? ""}</p>
-                    <p>
-                      {new Date(data.created_at).getFullYear()}
-                    </p>
-                  </div>
-                  {data.description && (
-                    <div className="minimap-item-info-row">
-                      <p>{data.description}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Hint */}
-      <div className="parallax-scroll-hint">
-        <div className="parallax-scroll-line" />
-        <p>Scroll to explore</p>
+      {/* Prev / Next Navigation */}
+      <div className="parallax-nav-arrows">
+        <button
+          onClick={() => goToProject('prev')}
+          className="parallax-nav-btn"
+          aria-label="Previous project"
+        >
+          <ChevronUp className="h-5 w-5" />
+        </button>
+        <button
+          onClick={() => goToProject('next')}
+          className="parallax-nav-btn"
+          aria-label="Next project"
+        >
+          <ChevronDown className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );
