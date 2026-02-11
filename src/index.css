@@ -434,7 +434,7 @@ body {
   border: var(--glowingeffect-border-width, 1px) solid transparent;
   border-radius: inherit;
   background: var(--gradient);
-  background-attachment: fixed;
+  background-attachment: scroll;
   mask-clip: padding-box, border-box;
   mask-composite: intersect;
   mask-image: linear-gradient(#0000, #0000),

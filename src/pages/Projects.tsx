@@ -49,7 +49,7 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
       className="list-none cursor-pointer break-inside-avoid mb-4"
       onClick={() => navigate(`/project/${project.id}`)}
     >
-      <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-1.5 md:rounded-[1.5rem] md:p-2">
+      <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-1.5 md:rounded-[1.5rem] md:p-2 overflow-visible">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -199,7 +199,7 @@ const Projects = () => {
       {/* Projects Masonry Grid */}
       <main className="mx-auto max-w-[1600px] px-6 pb-12">
         {isLoading ? (
-          <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4">
+          <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4">
             {Array.from({ length: 10 }).map((_, i) => (
               <div key={i} className="break-inside-avoid mb-4">
                 <div
@@ -221,7 +221,7 @@ const Projects = () => {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
+            className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
           >
             {projects.map(project => (
               <ProjectGlowCard key={project.id} project={project} />
