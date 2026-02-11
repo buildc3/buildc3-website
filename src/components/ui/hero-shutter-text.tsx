@@ -1,8 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw } from "lucide-react";
 
 interface HeroTextProps {
   text?: string;
@@ -15,7 +14,6 @@ export default function HeroText({
   className = "",
   children,
 }: HeroTextProps) {
-  const [count, setCount] = useState(0);
   const characters = text.split("");
 
   return (
@@ -38,7 +36,6 @@ export default function HeroText({
       <div className="relative z-10 w-full px-4 flex flex-col items-center">
         <AnimatePresence mode="wait">
           <motion.div
-            key={count}
             className="flex flex-wrap justify-center items-center w-full"
           >
             {characters.map((char, i) => (
@@ -111,22 +108,6 @@ export default function HeroText({
 
         {/* Children slot (for CTA buttons etc.) */}
         {children}
-      </div>
-
-      {/* Floating Replay Button */}
-      <div className="absolute bottom-12 flex flex-col items-center gap-6 z-20">
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 180 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setCount((c) => c + 1)}
-          className="p-4 bg-white text-black rounded-full shadow-2xl transition-colors duration-300"
-        >
-          <RefreshCw size={24} />
-        </motion.button>
-
-        <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-zinc-500">
-          Click to re-shutter
-        </p>
       </div>
 
       {/* Corner Accents */}

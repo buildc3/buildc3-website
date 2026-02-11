@@ -46,10 +46,10 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
   return (
     <motion.li
       variants={itemVariants}
-      className="min-h-[16rem] list-none cursor-pointer"
+      className="list-none cursor-pointer break-inside-avoid mb-4"
       onClick={() => navigate(`/project/${project.id}`)}
     >
-      <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+      <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-1.5 md:rounded-[1.5rem] md:p-2">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -58,40 +58,38 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
           inactiveZone={0.01}
           borderWidth={3}
         />
-        <div className="relative flex h-full flex-col overflow-hidden rounded-xl border-[0.75px] bg-background shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
-          {/* Thumbnail */}
+        <div className="relative flex flex-col overflow-hidden rounded-xl border-[0.75px] bg-background shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
+          {/* Thumbnail - natural height */}
           {project.thumbnail_url && (
-            <div className="relative w-full h-48 overflow-hidden">
+            <div className="relative w-full overflow-hidden">
               <img
                 src={project.thumbnail_url}
                 alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
             </div>
           )}
 
           {/* Content */}
-          <div className="relative flex flex-1 flex-col justify-between gap-3 p-5">
-            <div className="space-y-2">
-              <h3 className="text-lg leading-tight font-semibold tracking-[-0.02em] text-foreground line-clamp-2">
-                {project.title}
-              </h3>
-              {project.description && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {project.description}
-                </p>
-              )}
-            </div>
-            <div className="flex items-center justify-between">
+          <div className="relative flex flex-col gap-2 p-4">
+            <h3 className="text-sm leading-snug font-semibold tracking-[-0.01em] text-foreground line-clamp-2">
+              {project.title}
+            </h3>
+            {project.description && (
+              <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                {project.description}
+              </p>
+            )}
+            <div className="flex items-center justify-between mt-1">
               {project.category && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
                   {project.category.name}
                 </Badge>
               )}
               {project.external_link && (
-                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
               )}
             </div>
           </div>
@@ -198,13 +196,16 @@ const Projects = () => {
         </motion.div>
       </div>
 
-      {/* Projects Grid */}
+      {/* Projects Masonry Grid */}
       <main className="mx-auto max-w-[1600px] px-6 pb-12">
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="min-h-[16rem]">
-                <div className="h-full rounded-[1.25rem] border border-border p-2 md:p-3">
+          <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="break-inside-avoid mb-4">
+                <div
+                  className="rounded-[1.25rem] border border-border p-2 md:p-3"
+                  style={{ height: `${180 + (i % 4) * 60}px` }}
+                >
                   <div className="h-full rounded-xl bg-muted animate-pulse" />
                 </div>
               </div>
@@ -220,7 +221,7 @@ const Projects = () => {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+            className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
           >
             {projects.map(project => (
               <ProjectGlowCard key={project.id} project={project} />
