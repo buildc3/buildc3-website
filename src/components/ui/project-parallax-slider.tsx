@@ -287,7 +287,9 @@ export function ProjectParallaxSlider({
 
         {activeProject?.external_link && (
           <a
-            href={activeProject.external_link}
+            href={activeProject.external_link.startsWith('http://') || activeProject.external_link.startsWith('https://') 
+              ? activeProject.external_link 
+              : `https://${activeProject.external_link}`}
             target="_blank"
             rel="noopener noreferrer"
             className="parallax-visit-btn"
