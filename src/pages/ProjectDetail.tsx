@@ -40,8 +40,8 @@ export default function ProjectDetail() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
         <p className="text-lg font-semibold text-muted-foreground">Project not found</p>
-        <Button variant="outline" onClick={() => navigate('/')}>
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back
+        <Button variant="outline" onClick={() => navigate('/projects')}>
+          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Projects
         </Button>
       </div>
     );
@@ -49,33 +49,41 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        <Button variant="ghost" onClick={() => navigate('/')} className="mb-6">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back
-        </Button>
+      {/* Top nav bar */}
+      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="mx-auto flex items-center gap-4 px-6 py-4 max-w-[1600px]">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/projects')}>
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back to Projects
+          </Button>
+        </div>
+      </nav>
 
+      <div className="mx-auto max-w-4xl px-6 py-8">
         {project.thumbnail_url && (
-          <img
-            src={project.thumbnail_url}
-            alt={project.title}
-            className="w-full rounded-2xl shadow-md mb-6"
-          />
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-8">
+            <img
+              src={project.thumbnail_url}
+              alt={project.title}
+              className="w-full object-cover max-h-[500px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+          </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-3xl font-extrabold text-foreground">{project.title}</h1>
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight">{project.title}</h1>
             {project.category && (
-              <Badge>{project.category.name}</Badge>
+              <Badge className="text-sm">{project.category.name}</Badge>
             )}
           </div>
 
           {project.description && (
-            <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">{project.description}</p>
           )}
 
           {project.external_link && (
-            <Button asChild>
+            <Button asChild size="lg">
               <a href={project.external_link} target="_blank" rel="noopener noreferrer">
                 Visit Project <ExternalLink className="h-4 w-4 ml-2" />
               </a>
