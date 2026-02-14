@@ -34,7 +34,7 @@ const Homepage = () => {
           transition={{ delay: 1.6, duration: 1 }}
           className="mt-6 text-zinc-500 text-sm uppercase tracking-[0.3em] font-semibold z-20"
         >
-          Creative Portfolio & Projects
+          BUILDC3 : IN, WITH AND FOR THE COMMUNITY
         </motion.p>
       </HeroText>
     </div>

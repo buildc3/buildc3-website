@@ -26,9 +26,14 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
   return (
     <nav className="sticky top-0 z-50 bg-card shadow-sm">
       <div className="mx-auto flex items-center gap-4 px-4 py-3 max-w-7xl">
-        <button onClick={handleLogoClick} className="shrink-0 select-none">
-          <img src={logo} alt="BUILDC3" className="h-10 w-auto" />
-        </button>
+        <div className="flex items-center gap-3 shrink-0">
+          <button onClick={handleLogoClick} className="shrink-0 select-none">
+            <img src={logo} alt="BUILDC3" className="h-10 w-auto" />
+          </button>
+          <span className="text-sm font-semibold text-foreground hidden sm:block">
+            BUILDC3 : in, with and for the community
+          </span>
+        </div>
 
         <div className="relative flex-1 max-w-xl">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

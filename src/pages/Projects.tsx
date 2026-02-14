@@ -133,11 +133,49 @@ const Projects = () => {
             <ArrowLeft className="h-5 w-5" />
           </button>
 
-          <button onClick={handleLogoClick} className="shrink-0 select-none">
-            <img src={logo} alt="BUILDC3" className="h-9 w-auto" />
-          </button>
+          <div className="flex items-center gap-3">
+            <button onClick={handleLogoClick} className="shrink-0 select-none">
+              <img src={logo} alt="BUILDC3" className="h-9 w-auto" />
+            </button>
+            <span className="text-sm font-semibold text-foreground hidden sm:block">
+              BUILDC3 : in, with and for the community
+            </span>
+          </div>
+        </div>
+      </nav>
 
-          <div className="relative flex-1 max-w-md ml-auto">
+      {/* Category Bar with Search */}
+      <div className="sticky top-[65px] z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="mx-auto max-w-[1600px] px-6 py-3 flex items-center gap-4">
+          <div className="flex gap-2 overflow-x-auto hide-scrollbar flex-1">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className={cn(
+                'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors',
+                selectedCategory === null
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-muted'
+              )}
+            >
+              All
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={cn(
+                  'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors whitespace-nowrap',
+                  selectedCategory === cat.id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-muted'
+                )}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative w-full max-w-xs shrink-0">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               value={search}
@@ -146,37 +184,6 @@ const Projects = () => {
               className="pl-10 rounded-full bg-secondary border-none focus-visible:ring-primary"
             />
           </div>
-        </div>
-      </nav>
-
-      {/* Category Bar */}
-      <div className="sticky top-[65px] z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto max-w-[1600px] px-6 py-3 flex gap-2 overflow-x-auto hide-scrollbar">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={cn(
-              'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors',
-              selectedCategory === null
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-secondary-foreground hover:bg-muted'
-            )}
-          >
-            All
-          </button>
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={cn(
-                'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors whitespace-nowrap',
-                selectedCategory === cat.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-muted'
-              )}
-            >
-              {cat.name}
-            </button>
-          ))}
         </div>
       </div>
 
