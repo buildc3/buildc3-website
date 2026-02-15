@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { HoverGlowCard } from '@/components/ui/hover-glow-card';
 import type { Project } from '@/types/database';
 
 interface ProjectCardProps {
@@ -11,15 +12,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <div
-      className="masonry-item cursor-pointer group"
+      className="masonry-item cursor-pointer"
       onClick={() => navigate(`/project/${project.id}`)}
     >
-      <div className="rounded-2xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-shadow duration-300">
+      <HoverGlowCard>
         {project.thumbnail_url && (
           <img
             src={project.thumbnail_url}
             alt={project.title}
-            className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
         )}
@@ -31,7 +32,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </Badge>
           )}
         </div>
-      </div>
+      </HoverGlowCard>
     </div>
   );
 }
