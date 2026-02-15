@@ -37,6 +37,23 @@ const Homepage = () => {
           BUILDC3 : IN, WITH AND FOR THE COMMUNITY
         </motion.p>
       </HeroText>
+
+      {/* Netlify Badge - Bottom Right */}
+      <motion.a
+        href="https://www.netlify.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 0.8 }}
+        className="fixed bottom-4 right-4 z-50 hover:opacity-80 transition-opacity"
+      >
+        <img
+          src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
+          alt="Deploys by Netlify"
+          className="h-10"
+        />
+      </motion.a>
     </div>
   );
 };
