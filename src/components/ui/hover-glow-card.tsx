@@ -10,14 +10,13 @@ interface HoverGlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Premium card with ultra-smooth animated edge-traveling glow.
+ * Premium card with ultra-thin animated edge light on hover.
  *
  * Idle: clean dark card, zero glow, zero animation cost.
- * Hover / Touch / Focus: rotating conic-gradient light drifts along
- *   edges (8 s cycle) with subtle opacity breathing (0.65 ↔ 0.75).
- *   Wide 30 px blur creates an atmospheric glow; 2 px blur traces
- *   the border edge.
- * Mouse-leave / touch-end: glow fades out (300 ms), animation pauses.
+ * Hover / Touch / Focus: rotating conic-gradient traces a thin
+ *   hair-line of light along the card border (8s cycle).
+ *   Subtle outer glow (4px blur) adds atmosphere without bulk.
+ * Mouse-leave / touch-end: fades out (300ms), animation pauses.
  * Respects prefers-reduced-motion: static glow, no movement.
  */
 const HoverGlowCard = forwardRef<HTMLDivElement, HoverGlowCardProps>(
@@ -43,12 +42,12 @@ const HoverGlowCard = forwardRef<HTMLDivElement, HoverGlowCardProps>(
     }, []);
 
     // Shared active class tokens applied when touched on mobile
-    const activeOpacityOuter = touched ? "!opacity-100" : undefined;
-    const activeOpacityEdge = touched ? "!opacity-60" : undefined;
+    const activeOpacityGlow = touched ? "!opacity-40" : undefined;
+    const activeOpacityEdge = touched ? "!opacity-50" : undefined;
     const activePlayState = touched
       ? "![animation-play-state:running]"
       : undefined;
-    const activeScale = touched ? "!scale-[1.01]" : undefined;
+    const activeScale = touched ? "!scale-[1.008]" : undefined;
 
     return (
       <div
@@ -64,23 +63,22 @@ const HoverGlowCard = forwardRef<HTMLDivElement, HoverGlowCardProps>(
         {...props}
       >
         {/*
-         * Outer blur glow — fade wrapper.
-         * Wrapper controls show/hide via opacity transition.
-         * Inner div runs the rotating + breathing animation.
+         * Soft outer glow — very subtle atmosphere bleed.
+         * Low opacity + small blur = thin halo, not a fat border.
          */}
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute -inset-[5px] rounded-[inherit]",
-            "transition-opacity duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-            "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
-            activeOpacityOuter
+            "pointer-events-none absolute -inset-[2px] rounded-[inherit]",
+            "transition-opacity duration-300 ease-in-out",
+            "opacity-0 group-hover:opacity-40 group-focus-within:opacity-40",
+            activeOpacityGlow
           )}
         >
           <div
             className={cn(
               "absolute inset-0 rounded-[inherit]",
-              "blur-[30px]",
+              "blur-[4px]",
               "animate-edge-glow [animation-play-state:paused]",
               "group-hover:[animation-play-state:running]",
               "group-focus-within:[animation-play-state:running]",
@@ -90,22 +88,22 @@ const HoverGlowCard = forwardRef<HTMLDivElement, HoverGlowCardProps>(
         </div>
 
         {/*
-         * Edge-line glow — fade wrapper.
-         * Thin blur traces the border for a crisp accent.
+         * Thin edge-line — the primary visible element.
+         * Hair-thin 1px blur traces the card border.
          */}
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute -inset-[1.5px] rounded-[inherit]",
-            "transition-opacity duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-            "opacity-0 group-hover:opacity-60 group-focus-within:opacity-60",
+            "pointer-events-none absolute -inset-[0.5px] rounded-[inherit]",
+            "transition-opacity duration-300 ease-in-out",
+            "opacity-0 group-hover:opacity-50 group-focus-within:opacity-50",
             activeOpacityEdge
           )}
         >
           <div
             className={cn(
               "absolute inset-0 rounded-[inherit]",
-              "blur-[2px]",
+              "blur-[1px]",
               "animate-edge-glow [animation-play-state:paused]",
               "group-hover:[animation-play-state:running]",
               "group-focus-within:[animation-play-state:running]",
@@ -120,8 +118,8 @@ const HoverGlowCard = forwardRef<HTMLDivElement, HoverGlowCardProps>(
             "relative flex flex-col overflow-hidden rounded-xl",
             "border-[0.75px] border-border/50 bg-background",
             "shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]",
-            "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-            "group-hover:scale-[1.01] group-focus-within:scale-[1.01]",
+            "transition-transform duration-300 ease-in-out",
+            "group-hover:scale-[1.008] group-focus-within:scale-[1.008]",
             activeScale,
             "motion-reduce:!transition-none motion-reduce:!transform-none",
             contentClassName
