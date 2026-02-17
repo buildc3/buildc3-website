@@ -111,7 +111,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Masonry grid */
+/* Masonry grid – uses CSS columns only for the old MasonryGrid component */
 .masonry-grid {
   column-count: 2;
   column-gap: 1rem;
@@ -138,14 +138,6 @@ body {
 .masonry-item {
   break-inside: avoid;
   margin-bottom: 1rem;
-}
-
-/* Stabilise cards inside CSS columns to prevent reflow/repaint glitches */
-.masonry-grid > * {
-  break-inside: avoid;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 /* Hide scrollbar for category bar */
@@ -433,7 +425,6 @@ body {
 .glow {
   position: absolute;
   inset: 0;
-  will-change: auto;
   contain: layout style;
 }
 
