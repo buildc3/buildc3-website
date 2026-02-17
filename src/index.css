@@ -140,6 +140,14 @@ body {
   margin-bottom: 1rem;
 }
 
+/* Stabilise cards inside CSS columns to prevent reflow/repaint glitches */
+.masonry-grid > * {
+  break-inside: avoid;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 /* Hide scrollbar for category bar */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -425,6 +433,8 @@ body {
 .glow {
   position: absolute;
   inset: 0;
+  will-change: auto;
+  contain: layout style;
 }
 
 .glow::after {
@@ -446,4 +456,5 @@ body {
     );
   opacity: var(--active, 0);
   transition: opacity 300ms;
+  pointer-events: none;
 }
