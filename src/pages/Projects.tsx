@@ -151,19 +151,21 @@ const Projects = () => {
     <div className="min-h-screen bg-background">
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto flex items-center gap-4 px-6 py-4 max-w-[1600px]">
+        <div className="relative">
           <button
             onClick={() => navigate('/')}
-            className="shrink-0 flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors"
+            className="absolute left-8 top-1/2 -translate-y-1/2 shrink-0 flex items-center gap-2 px-3 py-2 text-base text-muted-foreground hover:text-foreground transition-colors z-10 border border-border rounded-full hover:bg-accent"
           >
             <ArrowLeft className="h-5 w-5" />
+            <span className="hidden sm:inline">Back</span>
           </button>
 
-          <div className="flex items-center gap-3">
+          <div className="mx-auto flex items-center gap-4 px-6 py-4 max-w-[1600px]">
             <button onClick={handleLogoClick} className="shrink-0 select-none">
-              <img src={logo} alt="BUILDC3" className="h-9 w-auto" />
+              <img src={logo} alt="BUILDC3" className="h-12 w-auto" />
             </button>
-            <span className="text-sm font-semibold text-foreground hidden sm:block">
+            
+            <span className="text-2xl font-bold text-foreground">
               BUILDC3 : in, with and for the community
             </span>
           </div>
