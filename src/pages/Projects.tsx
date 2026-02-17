@@ -47,9 +47,13 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
     <motion.li
       variants={itemVariants}
       className="list-none cursor-pointer break-inside-avoid mb-4"
+      style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}
       onClick={() => navigate(`/project/${project.id}`)}
     >
-      <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-1.5 md:rounded-[1.5rem] md:p-2 overflow-visible">
+      <div
+        className="relative rounded-[1.25rem] border-[0.75px] border-border p-1.5 md:rounded-[1.5rem] md:p-2"
+        style={{ isolation: 'isolate' }}
+      >
         <GlowingEffect
           spread={40}
           glow={true}
@@ -58,17 +62,18 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
           inactiveZone={0.01}
           borderWidth={3}
         />
-        <div className="relative flex flex-col overflow-hidden rounded-xl border-[0.75px] bg-background shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
-          {/* Thumbnail - natural height */}
+        <div className="relative flex flex-col rounded-xl border-[0.75px] bg-background shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] overflow-hidden">
+          {/* Thumbnail - natural height, no scale on hover to prevent masonry reflow */}
           {project.thumbnail_url && (
-            <div className="relative w-full overflow-hidden">
+            <div className="relative w-full">
               <img
                 src={project.thumbnail_url}
                 alt={project.title}
-                className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
+                className="w-full h-auto object-cover block"
                 loading="lazy"
+                draggable={false}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
             </div>
           )}
 

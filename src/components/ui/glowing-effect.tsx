@@ -34,6 +34,8 @@ const GlowingEffect = memo(
     const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
 
+    const activeAnimationRef = useRef<{ stop?: () => void } | null>(null);
+
     const handleMove = useCallback(
       (e?: MouseEvent | { x: number; y: number }) => {
         if (!containerRef.current) return;
@@ -47,8 +49,8 @@ const GlowingEffect = memo(
           if (!element) return;
 
           const { left, top, width, height } = element.getBoundingClientRect();
-          const mouseX = e?.x ?? lastPosition.current.x;
-          const mouseY = e?.y ?? lastPosition.current.y;
+          const mouseX = e && 'x' in e ? e.x : (e as MouseEvent)?.clientX ?? lastPosition.current.x;
+          const mouseY = e && 'y' in e ? e.y : (e as MouseEvent)?.clientY ?? lastPosition.current.y;
 
           if (e) {
             lastPosition.current = { x: mouseX, y: mouseY };
@@ -86,13 +88,21 @@ const GlowingEffect = memo(
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
 
-          animate(currentAngle, newAngle, {
+          // Stop any previous animation before starting a new one
+          if (activeAnimationRef.current?.stop) {
+            activeAnimationRef.current.stop();
+          }
+
+          const controls = animate(currentAngle, newAngle, {
             duration: movementDuration,
             ease: [0.16, 1, 0.3, 1],
             onUpdate: (value) => {
-              element.style.setProperty("--start", String(value));
+              if (containerRef.current) {
+                containerRef.current.style.setProperty("--start", String(value));
+              }
             },
           });
+          activeAnimationRef.current = controls;
         });
       },
       [inactiveZone, proximity, movementDuration]
@@ -105,7 +115,7 @@ const GlowingEffect = memo(
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
 
       window.addEventListener("scroll", handleScroll, { passive: true });
-      document.body.addEventListener("pointermove", handlePointerMove, {
+      window.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
 
@@ -113,8 +123,11 @@ const GlowingEffect = memo(
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
+        if (activeAnimationRef.current?.stop) {
+          activeAnimationRef.current.stop();
+        }
         window.removeEventListener("scroll", handleScroll);
-        document.body.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("pointermove", handlePointerMove);
       };
     }, [handleMove, disabled]);
 
@@ -130,35 +143,6 @@ const GlowingEffect = memo(
         />
         <div
           ref={containerRef}
-          style={
-            {
-              "--blur": `${blur}px`,
-              "--spread": spread,
-              "--start": "0",
-              "--active": "0",
-              "--glowingeffect-border-width": `${borderWidth}px`,
-              "--repeating-conic-gradient-times": "5",
-              "--gradient":
-                variant === "white"
-                  ? `repeating-conic-gradient(
-                  from 236.84deg at 50% 50%,
-                  var(--black),
-                  var(--black) calc(25% / var(--repeating-conic-gradient-times))
-                )`
-                  : `radial-gradient(circle, #dd7bbb 10%, #dd7bbb00 20%),
-                radial-gradient(circle at 40% 40%, #d79f1e 5%, #d79f1e00 15%),
-                radial-gradient(circle at 60% 60%, #5a922c 10%, #5a922c00 20%),
-                radial-gradient(circle at 40% 60%, #4c7894 10%, #4c789400 20%),
-                repeating-conic-gradient(
-                  from 236.84deg at 50% 50%,
-                  #dd7bbb 0%,
-                  #d79f1e calc(25% / var(--repeating-conic-gradient-times)),
-                  #5a922c calc(50% / var(--repeating-conic-gradient-times)),
-                  #4c7894 calc(75% / var(--repeating-conic-gradient-times)),
-                  #dd7bbb calc(100% / var(--repeating-conic-gradient-times))
-                )`,
-            } as React.CSSProperties
-          }
           className={cn(
             "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
             glow && "opacity-100",
@@ -166,6 +150,39 @@ const GlowingEffect = memo(
             className,
             disabled && "!hidden"
           )}
+          style={{
+            ...(
+              {
+                "--blur": `${blur}px`,
+                "--spread": spread,
+                "--start": "0",
+                "--active": "0",
+                "--glowingeffect-border-width": `${borderWidth}px`,
+                "--repeating-conic-gradient-times": "5",
+                "--gradient":
+                  variant === "white"
+                    ? `repeating-conic-gradient(
+                    from 236.84deg at 50% 50%,
+                    var(--black),
+                    var(--black) calc(25% / var(--repeating-conic-gradient-times))
+                  )`
+                    : `radial-gradient(circle, #dd7bbb 10%, #dd7bbb00 20%),
+                  radial-gradient(circle at 40% 40%, #d79f1e 5%, #d79f1e00 15%),
+                  radial-gradient(circle at 60% 60%, #5a922c 10%, #5a922c00 20%),
+                  radial-gradient(circle at 40% 60%, #4c7894 10%, #4c789400 20%),
+                  repeating-conic-gradient(
+                    from 236.84deg at 50% 50%,
+                    #dd7bbb 0%,
+                    #d79f1e calc(25% / var(--repeating-conic-gradient-times)),
+                    #5a922c calc(50% / var(--repeating-conic-gradient-times)),
+                    #4c7894 calc(75% / var(--repeating-conic-gradient-times)),
+                    #dd7bbb calc(100% / var(--repeating-conic-gradient-times))
+                  )`,
+                willChange: "auto",
+                contain: "layout style",
+              } as React.CSSProperties
+            ),
+          }}
         >
           <div
             className={cn(
