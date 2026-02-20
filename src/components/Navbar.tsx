@@ -44,6 +44,27 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
             className="pl-10 rounded-full bg-secondary border-none focus-visible:ring-primary"
           />
         </div>
+
+        <div className="flex items-center gap-6 shrink-0">
+          <a
+            href="#lets-talk"
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Let's Talk
+          </a>
+          <a
+            href="#meet-the-community"
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            Meet the Community
+          </a>
+          <a
+            href="#about-the-community"
+            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          >
+            About the Community
+          </a>
+        </div>
       </div>
     </nav>
   );
