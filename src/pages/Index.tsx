@@ -6,7 +6,7 @@ import { AdminPanel } from '@/components/AdminPanel';
 
 const Index = () => {
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [adminOpen, setAdminOpen] = useState(false);
 
   return (

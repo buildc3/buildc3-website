@@ -9,6 +9,7 @@ import type { Project } from '@/types/database';
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const projectId = id ? parseInt(id, 10) : null;
 
   // Fetch ALL projects so the slider can scroll between them
   const { data: projects = [], isLoading } = useQuery({
@@ -16,15 +17,25 @@ export default function ProjectDetail() {
     queryFn: async (): Promise<Project[]> => {
       const { data, error } = await supabase
         .from('projects')
-        .select('*, category:categories(*)')
+        .select(`
+          *,
+          project_categories(
+            category:categories(*)
+          )
+        `)
         .order('created_at', { ascending: false });
       if (error) throw error;
-      return data ?? [];
+      
+      // Transform the data to include categories array
+      return (data ?? []).map(project => ({
+        ...project,
+        categories: project.project_categories?.map(pc => pc.category).filter(Boolean) ?? [],
+      }));
     },
   });
 
   // Find the index of the clicked project
-  const startIndex = projects.findIndex((p) => p.id === id);
+  const startIndex = projects.findIndex((p) => p.id === projectId);
 
   if (isLoading) {
     return (

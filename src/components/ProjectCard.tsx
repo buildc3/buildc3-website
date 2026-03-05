@@ -25,10 +25,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
         <div className="p-3">
           <h3 className="font-bold text-sm text-card-foreground line-clamp-2">{project.title}</h3>
-          {project.category && (
-            <Badge variant="secondary" className="mt-1.5 text-xs">
-              {project.category.name}
-            </Badge>
+          {project.categories && project.categories.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-1.5">
+              {project.categories.map(category => (
+                <Badge key={category.id} variant="secondary" className="text-xs">
+                  {category.name}
+                </Badge>
+              ))}
+            </div>
           )}
         </div>
       </div>

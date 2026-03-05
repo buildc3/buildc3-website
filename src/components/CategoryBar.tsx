@@ -2,8 +2,8 @@ import { useCategories } from '@/hooks/useCategories';
 import { cn } from '@/lib/utils';
 
 interface CategoryBarProps {
-  selectedId: string | null;
-  onSelect: (id: string | null) => void;
+  selectedId: number | null;
+  onSelect: (id: number | null) => void;
 }
 
 export function CategoryBar({ selectedId, onSelect }: CategoryBarProps) {

@@ -313,7 +313,9 @@ export function ProjectParallaxSlider({
             {/* Row 2: Category + Thumbnail + Year */}
             <div className="parallax-info-middle">
               <span className="parallax-info-category">
-                {activeProject.category?.name?.toUpperCase() ?? ""}
+                {activeProject.categories && activeProject.categories.length > 0
+                  ? activeProject.categories.map(cat => cat.name).join(" • ").toUpperCase()
+                  : ""}
               </span>
               <div className="parallax-info-thumb">
                 {activeProject.thumbnail_url && (

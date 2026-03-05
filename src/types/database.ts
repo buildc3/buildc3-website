@@ -1,23 +1,30 @@
 export interface Category {
-  id: string;
+  id: number;
   name: string;
   display_order: number;
   created_at: string;
 }
 
+export interface ProjectCategory {
+  id: number;
+  project_id: number;
+  category_id: number;
+  created_at: string;
+}
+
 export interface Project {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  category_id: string;
   thumbnail_url: string;
   external_link: string;
   created_at: string;
-  category?: Category;
+  categories?: Category[];
+  project_categories?: { category: Category }[];
 }
 
 export interface CommunityMember {
-  id: string;
+  id: number;
   name: string;
   role: string;
   image_url: string;

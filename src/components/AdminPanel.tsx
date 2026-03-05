@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import { X, Plus, Trash2, Pencil } from 'lucide-react';
 import type { Project, CommunityMember } from '@/types/database';
 import { toast } from 'sonner';
@@ -88,43 +89,90 @@ function ProjectsTab() {
   const [editing, setEditing] = useState<Project | null>(null);
   const [adding, setAdding] = useState(false);
 
-  const [form, setForm] = useState({ title: '', description: '', category_id: '', thumbnail_url: '', external_link: '' });
+  const [form, setForm] = useState({ title: '', description: '', category_ids: [] as number[], thumbnail_url: '', external_link: '' });
 
-  const resetForm = () => setForm({ title: '', description: '', category_id: '', thumbnail_url: '', external_link: '' });
+  const resetForm = () => setForm({ title: '', description: '', category_ids: [], thumbnail_url: '', external_link: '' });
 
   const handleSave = async () => {
-    if (!form.title || !form.category_id) {
-      toast.error('Title and category are required');
+    if (!form.title || form.category_ids.length === 0) {
+      toast.error('Title and at least one category are required');
       return;
     }
 
     if (editing) {
-      const { error } = await supabase.from('projects').update(form).eq('id', editing.id);
+      // Update project
+      const { error } = await supabase.from('projects').update({
+        title: form.title,
+        description: form.description,
+        thumbnail_url: form.thumbnail_url,
+        external_link: form.external_link,
+      }).eq('id', editing.id);
       if (error) { toast.error(error.message); return; }
+
+      // Delete old category associations
+      await supabase.from('project_categories').delete().eq('project_id', editing.id);
+
+      // Insert new category associations
+      const { error: categoryError } = await supabase.from('project_categories').insert(
+        form.category_ids.map(categoryId => ({ project_id: editing.id, category_id: categoryId }))
+      );
+      if (categoryError) { toast.error(categoryError.message); return; }
+
       toast.success('Project updated');
     } else {
-      const { error } = await supabase.from('projects').insert(form);
+      // Insert project
+      const { data: newProject, error } = await supabase.from('projects').insert({
+        title: form.title,
+        description: form.description,
+        thumbnail_url: form.thumbnail_url,
+        external_link: form.external_link,
+      }).select().single();
       if (error) { toast.error(error.message); return; }
+
+      // Insert category associations
+      const { error: categoryError } = await supabase.from('project_categories').insert(
+        form.category_ids.map(categoryId => ({ project_id: newProject.id, category_id: categoryId }))
+      );
+      if (categoryError) { toast.error(categoryError.message); return; }
+
       toast.success('Project added');
     }
 
     queryClient.invalidateQueries({ queryKey: ['projects'] });
+    queryClient.invalidateQueries({ queryKey: ['all-projects'] });
     setEditing(null);
     setAdding(false);
     resetForm();
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
+    // CASCADE will handle deletion from project_categories
     const { error } = await supabase.from('projects').delete().eq('id', id);
     if (error) { toast.error(error.message); return; }
     toast.success('Deleted');
     queryClient.invalidateQueries({ queryKey: ['projects'] });
+    queryClient.invalidateQueries({ queryKey: ['all-projects'] });
   };
 
   const startEdit = (p: Project) => {
     setEditing(p);
     setAdding(true);
-    setForm({ title: p.title, description: p.description, category_id: p.category_id, thumbnail_url: p.thumbnail_url, external_link: p.external_link });
+    setForm({
+      title: p.title,
+      description: p.description,
+      category_ids: p.categories?.map(c => c.id) ?? [],
+      thumbnail_url: p.thumbnail_url,
+      external_link: p.external_link,
+    });
+  };
+
+  const toggleCategory = (categoryId: number) => {
+    setForm(f => ({
+      ...f,
+      category_ids: f.category_ids.includes(categoryId)
+        ? f.category_ids.filter(id => id !== categoryId)
+        : [...f.category_ids, categoryId]
+    }));
   };
 
   return (
@@ -133,12 +181,24 @@ function ProjectsTab() {
         <div className="space-y-3 p-4 border rounded-lg">
           <Input placeholder="Title" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} />
           <Textarea placeholder="Description" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
-          <Select value={form.category_id} onValueChange={v => setForm(f => ({ ...f, category_id: v }))}>
-            <SelectTrigger><SelectValue placeholder="Category" /></SelectTrigger>
-            <SelectContent>
-              {categories.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
-            </SelectContent>
-          </Select>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Categories (select multiple)</label>
+            <div className="flex flex-wrap gap-2 p-3 border rounded-md">
+              {categories.map(c => (
+                <Button
+                  key={c.id}
+                  type="button"
+                  variant={form.category_ids.includes(c.id) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => toggleCategory(c.id)}
+                >
+                  {c.name}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <Input placeholder="Thumbnail URL" value={form.thumbnail_url} onChange={e => setForm(f => ({ ...f, thumbnail_url: e.target.value }))} />
           <Input placeholder="External Link" value={form.external_link} onChange={e => setForm(f => ({ ...f, external_link: e.target.value }))} />
           <div className="flex gap-2">
@@ -154,7 +214,7 @@ function ProjectsTab() {
         <TableHeader>
           <TableRow>
             <TableHead>Title</TableHead>
-            <TableHead>Category</TableHead>
+            <TableHead>Categories</TableHead>
             <TableHead className="w-24">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -162,7 +222,17 @@ function ProjectsTab() {
           {projects.map(p => (
             <TableRow key={p.id}>
               <TableCell className="font-medium">{p.title}</TableCell>
-              <TableCell>{p.category?.name ?? '—'}</TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {p.categories && p.categories.length > 0 ? (
+                    p.categories.map(cat => (
+                      <Badge key={cat.id} variant="secondary" className="text-xs">
+                        {cat.name}
+                      </Badge>
+                    ))
+                  ) : '—'}
+                </div>
+              </TableCell>
               <TableCell>
                 <div className="flex gap-1">
                   <Button variant="ghost" size="icon" onClick={() => startEdit(p)}><Pencil className="h-4 w-4" /></Button>
@@ -192,7 +262,7 @@ function CategoriesTab() {
     queryClient.invalidateQueries({ queryKey: ['categories'] });
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     const { error } = await supabase.from('categories').delete().eq('id', id);
     if (error) { toast.error(error.message); return; }
     toast.success('Deleted');
@@ -252,7 +322,7 @@ function CommunityTab() {
     resetForm();
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     const { error } = await supabase.from('community_members').delete().eq('id', id);
     if (error) { toast.error(error.message); return; }
     toast.success('Deleted');

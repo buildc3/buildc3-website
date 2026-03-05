@@ -73,13 +73,17 @@ function ProjectGlowCard({ project }: ProjectGlowCardProps) {
               </p>
             )}
             <div className="flex items-center justify-between mt-1">
-              {project.category && (
-                <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
-                  {project.category.name}
-                </Badge>
-              )}
+              <div className="flex flex-wrap gap-1">
+                {project.categories && project.categories.length > 0 && (
+                  project.categories.map(category => (
+                    <Badge key={category.id} variant="secondary" className="text-[10px] px-2 py-0.5">
+                      {category.name}
+                    </Badge>
+                  ))
+                )}
+              </div>
               {project.external_link && (
-                <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                <ExternalLink className="h-3.5 w-3.5 text-muted-foreground ml-auto" />
               )}
             </div>
           </div>
@@ -125,7 +129,7 @@ function getColumns(): number {
 const Projects = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [adminOpen, setAdminOpen] = useState(false);
   const { data: projects = [], isLoading } = useProjects(
     selectedCategory ?? undefined,
