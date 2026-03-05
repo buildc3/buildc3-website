@@ -53,7 +53,7 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
             Let's Talk
           </a>
           <a
-            href="#meet-the-community"
+            href="/community"
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
             Meet the Community

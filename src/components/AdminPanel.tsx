@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import { useCategories } from '@/hooks/useCategories';
 import { useProjects } from '@/hooks/useProjects';
+import { useCommunityMembers } from '@/hooks/useCommunityMembers';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Plus, Trash2, Pencil } from 'lucide-react';
-import type { Project } from '@/types/database';
+import type { Project, CommunityMember } from '@/types/database';
 import { toast } from 'sonner';
 
 const ADMIN_PASSWORD = 'buildc3admin';
@@ -69,9 +70,11 @@ export function AdminPanel({ open, onClose }: AdminPanelProps) {
           <TabsList>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="categories">Categories</TabsTrigger>
+            <TabsTrigger value="community">Community</TabsTrigger>
           </TabsList>
           <TabsContent value="projects"><ProjectsTab /></TabsContent>
           <TabsContent value="categories"><CategoriesTab /></TabsContent>
+          <TabsContent value="community"><CommunityTab /></TabsContent>
         </Tabs>
       </DialogContent>
     </Dialog>
@@ -212,6 +215,109 @@ function CategoriesTab() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function CommunityTab() {
+  const queryClient = useQueryClient();
+  const { data: members = [] } = useCommunityMembers();
+  const [editing, setEditing] = useState<CommunityMember | null>(null);
+  const [adding, setAdding] = useState(false);
+
+  const emptyForm = { name: '', role: '', image_url: '', cover_image_url: '', linkedin_url: '', portfolio_url: '', display_order: 0 };
+  const [form, setForm] = useState(emptyForm);
+
+  const resetForm = () => setForm(emptyForm);
+
+  const handleSave = async () => {
+    if (!form.name) {
+      toast.error('Name is required');
+      return;
+    }
+
+    if (editing) {
+      const { error } = await supabase.from('community_members').update(form).eq('id', editing.id);
+      if (error) { toast.error(error.message); return; }
+      toast.success('Member updated');
+    } else {
+      const { error } = await supabase.from('community_members').insert(form);
+      if (error) { toast.error(error.message); return; }
+      toast.success('Member added');
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['community_members'] });
+    setEditing(null);
+    setAdding(false);
+    resetForm();
+  };
+
+  const handleDelete = async (id: string) => {
+    const { error } = await supabase.from('community_members').delete().eq('id', id);
+    if (error) { toast.error(error.message); return; }
+    toast.success('Deleted');
+    queryClient.invalidateQueries({ queryKey: ['community_members'] });
+  };
+
+  const startEdit = (m: CommunityMember) => {
+    setEditing(m);
+    setAdding(true);
+    setForm({
+      name: m.name,
+      role: m.role,
+      image_url: m.image_url,
+      cover_image_url: m.cover_image_url,
+      linkedin_url: m.linkedin_url,
+      portfolio_url: m.portfolio_url,
+      display_order: m.display_order,
+    });
+  };
+
+  return (
+    <div className="space-y-4">
+      {adding ? (
+        <div className="space-y-3 p-4 border rounded-lg">
+          <Input placeholder="Name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+          <Input placeholder="Role" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} />
+          <Input placeholder="Portrait Image URL" value={form.image_url} onChange={e => setForm(f => ({ ...f, image_url: e.target.value }))} />
+          <Input placeholder="Cover Image URL (16:9)" value={form.cover_image_url} onChange={e => setForm(f => ({ ...f, cover_image_url: e.target.value }))} />
+          <Input placeholder="LinkedIn URL" value={form.linkedin_url} onChange={e => setForm(f => ({ ...f, linkedin_url: e.target.value }))} />
+          <Input placeholder="Portfolio URL" value={form.portfolio_url} onChange={e => setForm(f => ({ ...f, portfolio_url: e.target.value }))} />
+          <Input placeholder="Display Order" type="number" value={form.display_order} onChange={e => setForm(f => ({ ...f, display_order: parseInt(e.target.value) || 0 }))} />
+          <div className="flex gap-2">
+            <Button onClick={handleSave}>{editing ? 'Update' : 'Add'}</Button>
+            <Button variant="outline" onClick={() => { setAdding(false); setEditing(null); resetForm(); }}>Cancel</Button>
+          </div>
+        </div>
+      ) : (
+        <Button onClick={() => setAdding(true)}><Plus className="h-4 w-4 mr-1" /> Add Member</Button>
+      )}
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Order</TableHead>
+            <TableHead className="w-24">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {members.map(m => (
+            <TableRow key={m.id}>
+              <TableCell className="font-medium">{m.name}</TableCell>
+              <TableCell>{m.role}</TableCell>
+              <TableCell>{m.display_order}</TableCell>
+              <TableCell>
+                <div className="flex gap-1">
+                  <Button variant="ghost" size="icon" onClick={() => startEdit(m)}><Pencil className="h-4 w-4" /></Button>
+                  <Button variant="ghost" size="icon" onClick={() => handleDelete(m.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

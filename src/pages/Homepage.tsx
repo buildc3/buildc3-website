@@ -18,7 +18,7 @@ const Homepage = () => {
             Let's Talk
           </a>
           <a
-            href="#meet-the-community"
+            href="/community"
             className="text-sm font-medium text-white/90 hover:text-white transition-colors"
           >
             Meet the Community
