@@ -12,8 +12,8 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
-      // Forward /api/* to the Netlify dev server (netlify dev runs on port 8888)
-      '/api': {
+      // Forward function calls to Netlify dev server (netlify dev runs on port 8888)
+      '/.netlify/functions': {
         target: 'http://localhost:8888',
         changeOrigin: true,
         rewrite: (path) => path,
