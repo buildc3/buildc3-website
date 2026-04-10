@@ -194,7 +194,7 @@ function ProjectsTab() {
             </div>
           </div>
 
-          <Input placeholder="Thumbnail URL" value={form.thumbnail_url} onChange={e => setForm(f => ({ ...f, thumbnail_url: e.target.value }))} />
+          <Input placeholder="Thumbnail path e.g. /project-images/myproject.png" value={form.thumbnail_url} onChange={e => setForm(f => ({ ...f, thumbnail_url: e.target.value }))} />
           <Input placeholder="External Link" value={form.external_link} onChange={e => setForm(f => ({ ...f, external_link: e.target.value }))} />
           <div className="flex gap-2">
             <Button onClick={handleSave}>{editing ? 'Update' : 'Add'}</Button>
