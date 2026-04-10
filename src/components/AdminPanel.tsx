@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { api } from '@/lib/api';
 import { useCategories } from '@/hooks/useCategories';
 import { useProjects } from '@/hooks/useProjects';
 import { useCommunityMembers } from '@/hooks/useCommunityMembers';
@@ -101,41 +101,34 @@ function ProjectsTab() {
 
     if (editing) {
       // Update project
-      const { error } = await supabase.from('projects').update({
-        title: form.title,
-        description: form.description,
-        thumbnail_url: form.thumbnail_url,
-        external_link: form.external_link,
-      }).eq('id', editing.id);
-      if (error) { toast.error(error.message); return; }
-
-      // Delete old category associations
-      await supabase.from('project_categories').delete().eq('project_id', editing.id);
-
-      // Insert new category associations
-      const { error: categoryError } = await supabase.from('project_categories').insert(
-        form.category_ids.map(categoryId => ({ project_id: editing.id, category_id: categoryId }))
-      );
-      if (categoryError) { toast.error(categoryError.message); return; }
-
-      toast.success('Project updated');
+      try {
+        await api.updateProject(editing.id, {
+          title: form.title,
+          description: form.description,
+          thumbnail_url: form.thumbnail_url,
+          external_link: form.external_link,
+          category_ids: form.category_ids,
+        });
+        toast.success('Project updated');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Update failed');
+        return;
+      }
     } else {
       // Insert project
-      const { data: newProject, error } = await supabase.from('projects').insert({
-        title: form.title,
-        description: form.description,
-        thumbnail_url: form.thumbnail_url,
-        external_link: form.external_link,
-      }).select().single();
-      if (error) { toast.error(error.message); return; }
-
-      // Insert category associations
-      const { error: categoryError } = await supabase.from('project_categories').insert(
-        form.category_ids.map(categoryId => ({ project_id: newProject.id, category_id: categoryId }))
-      );
-      if (categoryError) { toast.error(categoryError.message); return; }
-
-      toast.success('Project added');
+      try {
+        await api.createProject({
+          title: form.title,
+          description: form.description,
+          thumbnail_url: form.thumbnail_url,
+          external_link: form.external_link,
+          category_ids: form.category_ids,
+        });
+        toast.success('Project added');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Create failed');
+        return;
+      }
     }
 
     queryClient.invalidateQueries({ queryKey: ['projects'] });
@@ -146,12 +139,14 @@ function ProjectsTab() {
   };
 
   const handleDelete = async (id: number) => {
-    // CASCADE will handle deletion from project_categories
-    const { error } = await supabase.from('projects').delete().eq('id', id);
-    if (error) { toast.error(error.message); return; }
-    toast.success('Deleted');
-    queryClient.invalidateQueries({ queryKey: ['projects'] });
-    queryClient.invalidateQueries({ queryKey: ['all-projects'] });
+    try {
+      await api.deleteProject(id);
+      toast.success('Deleted');
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: ['all-projects'] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Delete failed');
+    }
   };
 
   const startEdit = (p: Project) => {
@@ -255,18 +250,24 @@ function CategoriesTab() {
   const handleAdd = async () => {
     if (!name.trim()) return;
     const maxOrder = categories.reduce((max, c) => Math.max(max, c.display_order), 0);
-    const { error } = await supabase.from('categories').insert({ name: name.trim(), display_order: maxOrder + 1 });
-    if (error) { toast.error(error.message); return; }
-    toast.success('Category added');
-    setName('');
-    queryClient.invalidateQueries({ queryKey: ['categories'] });
+    try {
+      await api.createCategory({ name: name.trim(), display_order: maxOrder + 1 });
+      toast.success('Category added');
+      setName('');
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to add');
+    }
   };
 
   const handleDelete = async (id: number) => {
-    const { error } = await supabase.from('categories').delete().eq('id', id);
-    if (error) { toast.error(error.message); return; }
-    toast.success('Deleted');
-    queryClient.invalidateQueries({ queryKey: ['categories'] });
+    try {
+      await api.deleteCategory(id);
+      toast.success('Deleted');
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Delete failed');
+    }
   };
 
   return (
@@ -307,13 +308,21 @@ function CommunityTab() {
     }
 
     if (editing) {
-      const { error } = await supabase.from('community_members').update(form).eq('id', editing.id);
-      if (error) { toast.error(error.message); return; }
-      toast.success('Member updated');
+      try {
+        await api.updateMember(editing.id, form);
+        toast.success('Member updated');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Update failed');
+        return;
+      }
     } else {
-      const { error } = await supabase.from('community_members').insert(form);
-      if (error) { toast.error(error.message); return; }
-      toast.success('Member added');
+      try {
+        await api.createMember(form);
+        toast.success('Member added');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Create failed');
+        return;
+      }
     }
 
     queryClient.invalidateQueries({ queryKey: ['community_members'] });
@@ -323,10 +332,13 @@ function CommunityTab() {
   };
 
   const handleDelete = async (id: number) => {
-    const { error } = await supabase.from('community_members').delete().eq('id', id);
-    if (error) { toast.error(error.message); return; }
-    toast.success('Deleted');
-    queryClient.invalidateQueries({ queryKey: ['community_members'] });
+    try {
+      await api.deleteMember(id);
+      toast.success('Deleted');
+      queryClient.invalidateQueries({ queryKey: ['community_members'] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Delete failed');
+    }
   };
 
   const startEdit = (m: CommunityMember) => {

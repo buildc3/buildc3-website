@@ -1,42 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { api } from '@/lib/api';
 import type { Project } from '@/types/database';
 
 export function useProjects(categoryId?: number, search?: string) {
   return useQuery({
     queryKey: ['projects', categoryId, search],
     queryFn: async (): Promise<Project[]> => {
-      let query = supabase
-        .from('projects')
-        .select(`
-          *,
-          project_categories(
-            category:categories(*)
-          )
-        `)
-        .order('created_at', { ascending: false });
+      const projects = await api.getProjects();
+
+      let filtered = projects;
 
       if (search) {
-        query = query.ilike('title', `%${search}%`);
+        const q = search.toLowerCase();
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(q));
       }
 
-      const { data, error } = await query;
-      if (error) throw error;
-      
-      // Transform the data to include categories array
-      const projects = (data ?? []).map(project => ({
-        ...project,
-        categories: project.project_categories?.map(pc => pc.category).filter(Boolean) ?? [],
-      }));
-
-      // Filter by category if provided
       if (categoryId) {
-        return projects.filter(project => 
-          project.categories?.some(cat => cat.id === categoryId)
+        filtered = filtered.filter(p =>
+          p.categories?.some(cat => cat.id === categoryId)
         );
       }
 
-      return projects;
+      return filtered;
     },
   });
 }

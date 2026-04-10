@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { api } from '@/lib/api';
 import { ProjectParallaxSlider } from '@/components/ui/project-parallax-slider';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -14,24 +14,7 @@ export default function ProjectDetail() {
   // Fetch ALL projects so the slider can scroll between them
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ['all-projects'],
-    queryFn: async (): Promise<Project[]> => {
-      const { data, error } = await supabase
-        .from('projects')
-        .select(`
-          *,
-          project_categories(
-            category:categories(*)
-          )
-        `)
-        .order('created_at', { ascending: false });
-      if (error) throw error;
-      
-      // Transform the data to include categories array
-      return (data ?? []).map(project => ({
-        ...project,
-        categories: project.project_categories?.map(pc => pc.category).filter(Boolean) ?? [],
-      }));
-    },
+    queryFn: (): Promise<Project[]> => api.getProjects(),
   });
 
   // Find the index of the clicked project
