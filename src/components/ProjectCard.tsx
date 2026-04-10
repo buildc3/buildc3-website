@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { ProjectImage } from '@/components/ProjectImage';
 import type { Project } from '@/types/database';
 
 interface ProjectCardProps {
@@ -15,14 +16,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
       onClick={() => navigate(`/project/${project.id}`)}
     >
       <div className="rounded-2xl overflow-hidden bg-card shadow-sm hover:shadow-lg transition-shadow duration-300">
-        {project.thumbnail_url && (
-          <img
-            src={project.thumbnail_url}
-            alt={project.title}
-            className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-          />
-        )}
+        <ProjectImage
+          project={project}
+          className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
         <div className="p-3">
           <h3 className="font-bold text-sm text-card-foreground line-clamp-2">{project.title}</h3>
           {project.categories && project.categories.length > 0 && (

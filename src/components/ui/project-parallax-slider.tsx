@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ExternalLink, ChevronUp, ChevronDown } from "lucide-react";
 import type { Project } from "@/types/database";
+import { ProjectImage } from "@/components/ProjectImage";
 
 interface ProjectParallaxSliderProps {
   projects: Project[];
@@ -318,9 +319,7 @@ export function ProjectParallaxSlider({
                   : ""}
               </span>
               <div className="parallax-info-thumb">
-                {activeProject.thumbnail_url && (
-                  <img src={activeProject.thumbnail_url} alt={activeProject.title} />
-                )}
+                <ProjectImage project={activeProject} />
               </div>
               <span className="parallax-info-year">{activeYear}</span>
             </div>
@@ -349,13 +348,7 @@ export function ProjectParallaxSlider({
                 else projectsRef.current.delete(i);
               }}
             >
-              {data.thumbnail_url ? (
-                <img src={data.thumbnail_url} alt={data.title} />
-              ) : (
-                <div className="project-placeholder">
-                  <span>{data.title}</span>
-                </div>
-              )}
+              <ProjectImage project={data} />
             </div>
           );
         })}
