@@ -1,10 +1,32 @@
 import type { Project, Category, CommunityMember } from '@/types/database';
 
-// SQLite API server
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// In production: use static JSON files; In development: use local SQLite server
+const IS_DEV = import.meta.env.DEV;
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+
+// Fetch static JSON (production) or from API (development)
+async function fetchData<T>(endpoint: string): Promise<T> {
+  if (IS_DEV) {
+    const res = await fetch(`${API_BASE}${endpoint}`, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: res.statusText }));
+      throw new Error(err.error ?? res.statusText);
+    }
+    return res.json() as Promise<T>;
+  }
+  // Production: fetch static JSON
+  const res = await fetch(`/api${endpoint}.json`);
+  if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
+  return res.json() as Promise<T>;
+}
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
+  if (!IS_DEV && options?.method && options.method !== 'GET') {
+    throw new Error('Write operations only available in development mode');
+  }
+  const res = await fetch(`${API_BASE}${path}`, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   });
@@ -34,8 +56,8 @@ interface MemberInput {
 }
 
 export const api = {
-  // Projects
-  getProjects: () => request<Project[]>('/projects'),
+  // Projects (read uses static JSON in prod)
+  getProjects: () => fetchData<Project[]>('/projects'),
   createProject: (data: ProjectInput) =>
     request<Project>('/projects', { method: 'POST', body: JSON.stringify(data) }),
   updateProject: (id: number, data: ProjectInput) =>
@@ -43,15 +65,15 @@ export const api = {
   deleteProject: (id: number) =>
     request<{ success: boolean }>(`/projects/${id}`, { method: 'DELETE' }),
 
-  // Categories
-  getCategories: () => request<Category[]>('/categories'),
+  // Categories (read uses static JSON in prod)
+  getCategories: () => fetchData<Category[]>('/categories'),
   createCategory: (data: { name: string; display_order: number }) =>
     request<Category>('/categories', { method: 'POST', body: JSON.stringify(data) }),
   deleteCategory: (id: number) =>
     request<{ success: boolean }>(`/categories/${id}`, { method: 'DELETE' }),
 
-  // Community Members
-  getCommunity: () => request<CommunityMember[]>('/community'),
+  // Community Members (read uses static JSON in prod)
+  getCommunity: () => fetchData<CommunityMember[]>('/community'),
   createMember: (data: MemberInput) =>
     request<CommunityMember>('/community', { method: 'POST', body: JSON.stringify(data) }),
   updateMember: (id: number, data: MemberInput) =>
