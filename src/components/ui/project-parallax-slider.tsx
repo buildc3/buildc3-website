@@ -286,19 +286,6 @@ export function ProjectParallaxSlider({
           <span>Back</span>
         </button>
 
-        {activeProject?.external_link && (
-          <a
-            href={activeProject.external_link.startsWith('http://') || activeProject.external_link.startsWith('https://') 
-              ? activeProject.external_link 
-              : `https://${activeProject.external_link}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="parallax-visit-btn"
-          >
-            <span>Visit Project</span>
-            <ExternalLink className="h-4 w-4" />
-          </a>
-        )}
       </div>
 
       {/* Centered Info Card Overlay */}
@@ -325,6 +312,22 @@ export function ProjectParallaxSlider({
             {activeProject.description && (
               <div className="parallax-info-desc">
                 {activeProject.description.toUpperCase()}
+              </div>
+            )}
+
+            {activeProject.external_link && (
+              <div className="parallax-info-actions">
+                <a
+                  href={activeProject.external_link.startsWith('http://') || activeProject.external_link.startsWith('https://')
+                    ? activeProject.external_link
+                    : `https://${activeProject.external_link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="parallax-visit-btn parallax-visit-btn--card"
+                >
+                  <span>Visit Project</span>
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
             )}
           </div>
