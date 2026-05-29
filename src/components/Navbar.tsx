@@ -47,23 +47,17 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
 
         <div className="flex items-center gap-6 shrink-0">
           <a
-            href="#lets-talk"
+            href="#about"
             className="text-sm font-medium text-foreground hover:text-primary transition-colors"
           >
-            Let's Talk
+            About
           </a>
-          <a
-            href="/community"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          <button
+            onClick={() => window.location.href = '/join-buildc3'}
+            className="px-4 py-2 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 transition-colors shadow"
           >
-            Meet the Community
-          </a>
-          <a
-            href="#about-the-community"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
-            About the Community
-          </a>
+            Join BuildC3
+          </button>
         </div>
       </div>
     </nav>

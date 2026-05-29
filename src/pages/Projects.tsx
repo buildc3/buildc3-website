@@ -1,16 +1,16 @@
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Search, ExternalLink } from 'lucide-react';
+import { Search, ExternalLink } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { useProjects } from '@/hooks/useProjects';
 import { useCategories } from '@/hooks/useCategories';
 import { AdminPanel } from '@/components/AdminPanel';
+import { SiteHeader } from '@/components/SiteHeader';
 import { cn } from '@/lib/utils';
 import type { Project } from '@/types/database';
-import logo from '@/assets/buildc3-logo.png';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -140,43 +140,14 @@ const Projects = () => {
   const columnCount = useResponsiveColumns();
   const columns = useColumnDistribution(projects, columnCount);
 
-  const clickTimestamps = useRef<number[]>([]);
-  const handleLogoClick = useCallback(() => {
-    const now = Date.now();
-    clickTimestamps.current.push(now);
-    clickTimestamps.current = clickTimestamps.current.filter(t => now - t < 2000);
-    if (clickTimestamps.current.length >= 5) {
-      clickTimestamps.current = [];
-      setAdminOpen(true);
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto flex items-center gap-4 px-6 py-4 max-w-[1600px]">
-          <button
-            onClick={() => navigate('/')}
-            className="shrink-0 flex items-center gap-2 px-3 py-2 text-base text-muted-foreground hover:text-foreground transition-colors border border-border rounded-full hover:bg-accent"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="hidden sm:inline">Back</span>
-          </button>
-
-          <button onClick={handleLogoClick} className="shrink-0 select-none">
-            <img src={logo} alt="BUILDC3" className="h-12 w-auto" />
-          </button>
-
-          <span className="text-2xl font-bold text-foreground truncate">
-            BUILDC3 : in, with and for the community
-          </span>
-        </div>
-      </nav>
+      <SiteHeader onLogoSecret={() => setAdminOpen(true)} />
 
       {/* Category Bar with Search */}
       <div className="sticky top-[65px] z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="mx-auto max-w-[1600px] px-6 py-3 flex items-center gap-4">
+        <div className="mx-auto max-w-7xl px-6 py-3 flex items-center gap-4">
           <div className="flex gap-2 overflow-x-auto hide-scrollbar flex-1">
             <button
               onClick={() => setSelectedCategory(null)}
@@ -218,7 +189,7 @@ const Projects = () => {
       </div>
 
       {/* Page Header */}
-      <div className="mx-auto max-w-[1600px] px-6 pt-8 pb-4">
+      <div className="mx-auto max-w-7xl px-6 pt-8 pb-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -234,7 +205,7 @@ const Projects = () => {
       </div>
 
       {/* Projects Masonry Grid */}
-      <main className="mx-auto max-w-[1600px] px-6 pb-12">
+      <main className="mx-auto max-w-7xl px-6 pb-12">
         {isLoading ? (
           <div className="flex gap-4">
             {Array.from({ length: columnCount }).map((_, col) => (

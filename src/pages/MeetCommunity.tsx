@@ -1,37 +1,14 @@
 import { TeamCard } from '@/components/TeamCard';
 import { useCommunityMembers } from '@/hooks/useCommunityMembers';
-import logo from '@/assets/buildc3-logo.png';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SiteHeader } from '@/components/SiteHeader';
 
 const MeetCommunity = () => {
   const { data: members = [], isLoading } = useCommunityMembers();
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card shadow-sm">
-        <div className="mx-auto flex items-center justify-between px-6 py-3 max-w-7xl">
-          <div className="flex items-center gap-3">
-            <a href="/">
-              <img src={logo} alt="BUILDC3" className="h-10 w-auto" />
-            </a>
-          </div>
-          <nav className="flex items-center gap-7">
-            <a
-              href="/"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              Home
-            </a>
-            <a
-              href="/projects"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              Projects
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Hero section */}
       <section className="mx-auto max-w-7xl px-6 pt-16 pb-10">

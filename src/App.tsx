@@ -8,6 +8,8 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import MeetCommunity from "./pages/MeetCommunity";
 import NotFound from "./pages/NotFound";
+import JoinBuildC3 from "./pages/JoinBuildC3";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
           <Route path="/community" element={<MeetCommunity />} />
+          <Route path="/join-buildc3" element={<JoinBuildC3 />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

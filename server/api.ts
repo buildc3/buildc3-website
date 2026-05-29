@@ -7,6 +7,7 @@ import cors from 'cors';
 import Database from 'better-sqlite3';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { neon } from '@neondatabase/serverless';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, '..', 'data', 'buildc3.db');
@@ -209,6 +210,41 @@ app.delete('/api/community/:id', (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error('[DELETE /api/community/:id]', err);
+    res.status(500).json({ error: (err as Error).message });
+  }
+});
+
+// ─── Join submissions (proxied from /.netlify/functions/submit-join in dev) ──
+app.post('/api/submit-join', async (req, res) => {
+  const { name, phone, email } = req.body ?? {};
+
+  if (!name?.trim() || !phone?.trim() || !email?.trim()) {
+    return res.status(400).json({ error: 'name, phone and email are required' });
+  }
+
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) {
+    return res.status(500).json({ error: 'DATABASE_URL is not configured on this server.' });
+  }
+
+  try {
+    const sql = neon(dbUrl);
+    await sql`
+      CREATE TABLE IF NOT EXISTS join_submissions (
+        id           SERIAL PRIMARY KEY,
+        name         TEXT        NOT NULL,
+        phone        TEXT        NOT NULL,
+        email        TEXT        NOT NULL,
+        submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `;
+    await sql`
+      INSERT INTO join_submissions (name, phone, email)
+      VALUES (${name.trim()}, ${phone.trim()}, ${email.trim()})
+    `;
+    res.json({ success: true });
+  } catch (err) {
+    console.error('[POST /api/submit-join]', err);
     res.status(500).json({ error: (err as Error).message });
   }
 });

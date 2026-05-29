@@ -12,11 +12,13 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
-      // Forward function calls to Netlify dev server (netlify dev runs on port 8888)
+      // In local dev, the Express server (port 3001) handles function routes.
+      // Run: pnpm dev:local  (starts both Vite + Express together)
       '/.netlify/functions': {
-        target: 'http://localhost:8888',
+        target: 'http://localhost:3001',
         changeOrigin: true,
-        rewrite: (path) => path,
+        // /netlify/functions/submit-join → /api/join
+        rewrite: (p) => p.replace(/^\/.netlify\/functions\/(.+)$/, '/api/$1'),
       },
     },
   },
