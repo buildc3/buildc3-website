@@ -2,6 +2,9 @@
   publish = "dist"
   command = "pnpm run build"
 
+[dev]
+  targetPort = 8080
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
