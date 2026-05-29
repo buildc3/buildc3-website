@@ -1,31 +1,15 @@
 import type { Project, Category, CommunityMember } from '@/types/database';
 
-// In production: use static JSON files; In development: use local SQLite server
-const IS_DEV = import.meta.env.DEV;
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
-// Fetch static JSON (production) or from API (development)
+// Always fetch from static JSON files (public/api/*.json)
 async function fetchData<T>(endpoint: string): Promise<T> {
-  if (IS_DEV) {
-    const res = await fetch(`${API_BASE}${endpoint}`, {
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: res.statusText }));
-      throw new Error(err.error ?? res.statusText);
-    }
-    return res.json() as Promise<T>;
-  }
-  // Production: fetch static JSON
   const res = await fetch(`/api${endpoint}.json`);
   if (!res.ok) throw new Error(`Failed to fetch ${endpoint}`);
   return res.json() as Promise<T>;
 }
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  if (!IS_DEV && options?.method && options.method !== 'GET') {
-    throw new Error('Write operations only available in development mode');
-  }
   const res = await fetch(`${API_BASE}${path}`, {
     headers: { 'Content-Type': 'application/json' },
     ...options,

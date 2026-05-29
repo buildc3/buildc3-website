@@ -6,30 +6,15 @@ import { SiteHeader } from "@/components/SiteHeader";
 const founders = [
   {
     id: "f1",
-    name: "Founder One",
-    role: "Co-Founder & CEO",
-    image_url: "https://api.dicebear.com/9.x/initials/svg?seed=F1&backgroundColor=7c3aed&fontColor=ffffff",
-    cover_image_url: "",
-    linkedin_url: "",
-    portfolio_url: "",
+    name: "Om Gupta",
+    role: "Co-Founder",
+    image_url: "/Om.PNG",
   },
   {
     id: "f2",
-    name: "Founder Two",
-    role: "Co-Founder & CTO",
-    image_url: "https://api.dicebear.com/9.x/initials/svg?seed=F2&backgroundColor=6d28d9&fontColor=ffffff",
-    cover_image_url: "",
-    linkedin_url: "",
-    portfolio_url: "",
-  },
-  {
-    id: "f3",
-    name: "Founder Three",
-    role: "Co-Founder & COO",
-    image_url: "https://api.dicebear.com/9.x/initials/svg?seed=F3&backgroundColor=5b21b6&fontColor=ffffff",
-    cover_image_url: "",
-    linkedin_url: "",
-    portfolio_url: "",
+    name: "Arunodoy Banerjee",
+    role: "Co-Founder",
+    image_url: "https://api.dicebear.com/9.x/initials/svg?seed=AB&backgroundColor=6d28d9&fontColor=ffffff",
   },
 ];
 
@@ -85,7 +70,7 @@ export default function About() {
         </div>
         <h2 className="text-3xl font-bold text-foreground mb-10">The people behind BuildC3</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
           {founders.map((founder) => (
             <div key={founder.id} className="group">
               <div className="relative rounded-2xl overflow-hidden bg-card shadow-md border border-border">
