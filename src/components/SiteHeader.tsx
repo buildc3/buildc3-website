@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import logo from '@/assets/buildc3-logo.png';
@@ -9,6 +10,7 @@ const NAV_LINKS = [
   { label: 'Services', href: '/services' },
   { label: 'Our Work', href: '/projects' },
   { label: 'Resources', href: '/resources' },
+  { label: 'Contact Us', href: '/contact' },
 ];
 
 interface SiteHeaderProps {
@@ -115,8 +117,10 @@ export function SiteHeader({ onLogoSecret, position = 'sticky' }: SiteHeaderProp
         </div>
       </header>
 
-      {/* Mobile menu popover */}
-      {mobileMenuOpen && (
+      {/* Mobile menu popover — portaled to body so ancestor transforms/perspective
+          (e.g. the CinematicHero's `perspective` + GSAP pin on About) can't trap
+          the fixed overlay and blank the screen. */}
+      {mobileMenuOpen && createPortal(
         <div className="fixed inset-0 z-[9999] md:hidden pointer-events-auto">
           {/* Backdrop - click to close */}
           <div 
@@ -164,7 +168,8 @@ export function SiteHeader({ onLogoSecret, position = 'sticky' }: SiteHeaderProp
               </a>
             </nav>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

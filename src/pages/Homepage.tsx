@@ -124,6 +124,45 @@ const Homepage = () => {
 
       </section>
 
+      {/* ── Powered & Supported By section ── */}
+      <section className="mx-auto max-w-6xl px-6 pb-20 pt-4 text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#9F8064]">
+          BuildC3 Powered and Supported By
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 md:gap-x-20">
+          {[
+            {
+              name: 'Netlify',
+              href: 'https://www.netlify.com',
+              logo: '/netlify.png',
+            },
+            {
+              name: 'Spline',
+              href: 'https://spline.design',
+              logo: '/spline.png',
+            },
+            {
+              name: 'Google',
+              href: 'https://www.google.com',
+              logo: '/google.png',
+            },
+          ].map(({ name, href, logo }) => (
+            <a
+              key={name}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={name}
+              title={name}
+              className="flex items-center opacity-80 transition-all duration-300 hover:opacity-100 hover:-translate-y-0.5"
+            >
+              <img src={logo} alt={`${name} logo`} className="h-10 w-auto object-contain" draggable={false} />
+            </a>
+          ))}
+        </div>
+      </section>
+
     </main>
   );
 };
