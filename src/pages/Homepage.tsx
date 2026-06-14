@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Spline from '@splinetool/react-spline';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 import { useProjects } from '@/hooks/useProjects';
 import { useCommunityMembers } from '@/hooks/useCommunityMembers';
 
@@ -41,6 +42,12 @@ const Homepage = () => {
 
   return (
     <main className="w-screen bg-background overflow-x-hidden">
+      <Seo
+        title="BuildC3 — Builders & Developers Community"
+        path="/"
+        exactTitle
+        description="BuildC3 is a community of builders and developers. Build in the community, with the community, and for the community — explore projects, services, resources and meet the team."
+      />
 
       {/* ── Hero section ── */}
       <section className="relative h-screen w-full">

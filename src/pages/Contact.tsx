@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 
 const CARD_BG = '#F3EBDD';
 const ACCENT = '#9F8064';
@@ -86,6 +87,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Contact"
+        path="/contact"
+        description="Get in touch with BuildC3. Have a project, idea, or want to join the community? Reach out and let's build together."
+      />
       <SiteHeader />
 
       <main className="pt-20 md:pt-24">

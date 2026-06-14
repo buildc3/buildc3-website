@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Copy, Check } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 import { getBlogBySlug, type ContentBlock } from '@/data/blogs';
 
 function CodeBlock({ text }: { text: string }) {
@@ -47,6 +48,12 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Seo
+        title={blog.title}
+        path={`/resources/${blog.slug}`}
+        description={blog.excerpt}
+        image={blog.image}
+      />
       <SiteHeader />
 
       <main className="pt-28 pb-20">

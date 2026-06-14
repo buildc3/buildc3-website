@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Seo } from "@/components/Seo";
 import { pagesConfig } from "@/config/pages";
 
 // ─── Float animation styles ───────────────────────────────────────────────────
@@ -287,6 +288,11 @@ export default function JoinBuildC3() {
 
   return (
     <div className="min-h-screen flex flex-col overflow-hidden bg-background">
+      <Seo
+        title="Join BuildC3"
+        path="/join-buildc3"
+        description="Join BuildC3 — become part of a community of builders and developers shipping real products together. Build in, with, and for the community."
+      />
       <SiteHeader />
 
       {isPrelaunch ? (

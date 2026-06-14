@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 import { blogPosts, type BlogPost } from '@/data/blogs';
 
 const BlogCard = ({ blog, size, index }: { blog: BlogPost, size: 'banner' | 'large' | 'medium' | 'small', index: number }) => {
@@ -57,6 +58,11 @@ const BlogCard = ({ blog, size, index }: { blog: BlogPost, size: 'banner' | 'lar
 const Resources = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Resources"
+        path="/resources"
+        description="Guides, articles, and resources from the BuildC3 community to help you build better — what to build, how to build it, and lessons from shipping."
+      />
       <SiteHeader />
 
       <main className="pt-20 md:pt-24">

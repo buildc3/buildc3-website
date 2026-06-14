@@ -8,6 +8,7 @@ import { useProjects } from '@/hooks/useProjects';
 import { useCategories } from '@/hooks/useCategories';
 import { useDesigns } from '@/hooks/useDesigns';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 import { cn } from '@/lib/utils';
 import type { Project } from '@/types/database';
 
@@ -201,6 +202,11 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Our Work"
+        path="/projects"
+        description="Browse projects built by the BuildC3 community — real products shipped by builders and developers, across categories and design styles."
+      />
       <SiteHeader />
 
       {/* Projects Masonry Grid */}

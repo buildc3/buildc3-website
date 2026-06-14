@@ -1,5 +1,6 @@
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Seo } from "@/components/Seo";
 import logo from "@/assets/buildc3-logo.png";
 import { useTeamMembers } from "@/hooks/useTeamMembers";
 import type { TeamMember } from "@/components/ui/team-showcase";
@@ -17,6 +18,11 @@ export default function About() {
 
   return (
     <div className="overflow-x-hidden w-full min-h-screen">
+      <Seo
+        title="About"
+        path="/about"
+        description="Learn about BuildC3 — why we started, what we believe, and the team helping builders turn ideas into shipped products with the community."
+      />
       <SiteHeader position="overlay" />
       <CinematicHero 
         brandName="BuildC3"

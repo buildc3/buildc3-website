@@ -2,12 +2,18 @@ import { TeamCard } from '@/components/TeamCard';
 import { useCommunityMembers } from '@/hooks/useCommunityMembers';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Seo } from '@/components/Seo';
 
 const MeetCommunity = () => {
   const { data: members = [], isLoading } = useCommunityMembers();
 
   return (
     <main className="min-h-screen bg-background">
+      <Seo
+        title="Community"
+        path="/community"
+        description="Meet the BuildC3 community — the builders, developers, and makers who build in the community, with the community, and for the community."
+      />
       <SiteHeader />
 
       {/* Hero section */}

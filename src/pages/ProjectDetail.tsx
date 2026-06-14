@@ -4,6 +4,7 @@ import { api } from '@/lib/api';
 import { ProjectParallaxSlider } from '@/components/ui/project-parallax-slider';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { Seo } from '@/components/Seo';
 import type { Project } from '@/types/database';
 
 export default function ProjectDetail() {
@@ -44,5 +45,23 @@ export default function ProjectDetail() {
     );
   }
 
-  return <ProjectParallaxSlider projects={projects} startIndex={startIndex} />;
+  const current = projects[startIndex];
+
+  return (
+    <>
+      {current && (
+        <Seo
+          title={current.title}
+          path={`/project/${current.id}`}
+          description={
+            current.description
+              ? `${current.description}`.slice(0, 160)
+              : `${current.title} — a project built by the BuildC3 community.`
+          }
+          image={current.thumbnail_url || undefined}
+        />
+      )}
+      <ProjectParallaxSlider projects={projects} startIndex={startIndex} />
+    </>
+  );
 }

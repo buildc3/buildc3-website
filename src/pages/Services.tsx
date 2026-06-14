@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { motion } from "framer-motion";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Seo } from "@/components/Seo";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/buildc3-logo.png";
 
@@ -115,6 +116,11 @@ export default function Services() {
   // services[4] = Service 5, [5] = Service 6 (bottom)
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9F3E0' }}>
+      <Seo
+        title="Services"
+        path="/services"
+        description="Explore what BuildC3 offers — from product design and development to community-driven building. See how we help you ship faster."
+      />
       <SiteHeader position="overlay" />
 
       <main>
