@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const SITE_NAME = 'BuildC3';
-const SITE_URL = 'https://buildc3.netlify.app';
+const SITE_URL = 'https://buildc3.tech';
 const DEFAULT_IMAGE = `${SITE_URL}/Screenshot%202026-03-27%20at%2016.41.16.png`;
 
 export interface SeoProps {

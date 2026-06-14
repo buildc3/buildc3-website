@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://buildc3.netlify.app/</loc>
+    <loc>https://buildc3.tech/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/about</loc>
+    <loc>https://buildc3.tech/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/services</loc>
+    <loc>https://buildc3.tech/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/projects</loc>
+    <loc>https://buildc3.tech/projects</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/resources</loc>
+    <loc>https://buildc3.tech/resources</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/community</loc>
+    <loc>https://buildc3.tech/community</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/contact</loc>
+    <loc>https://buildc3.tech/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/join-buildc3</loc>
+    <loc>https://buildc3.tech/join-buildc3</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/resources/choosing-what-to-build</loc>
+    <loc>https://buildc3.tech/resources/choosing-what-to-build</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://buildc3.netlify.app/resources/react-performance-optimization</loc>
+    <loc>https://buildc3.tech/resources/react-performance-optimization</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
