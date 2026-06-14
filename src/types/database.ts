@@ -21,6 +21,7 @@ export interface Project {
   created_at: string;
   categories?: Category[];
   project_categories?: { category: Category }[];
+  star_point?: string;
 }
 
 export interface CommunityMember {

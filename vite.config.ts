@@ -11,16 +11,6 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
-    proxy: {
-      // In local dev, the Express server (port 3001) handles function routes.
-      // Run: pnpm dev:local  (starts both Vite + Express together)
-      '/.netlify/functions': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        // /netlify/functions/submit-join → /api/join
-        rewrite: (p) => p.replace(/^\/.netlify\/functions\/(.+)$/, '/api/$1'),
-      },
-    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
