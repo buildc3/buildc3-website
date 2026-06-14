@@ -129,7 +129,7 @@ const Contact = () => {
             </div>
 
             {/* Code body */}
-            <div className="px-6 md:px-14 py-10 md:py-16 font-mono text-lg md:text-2xl leading-loose overflow-x-auto">
+            <div className="px-4 sm:px-6 md:px-14 py-8 md:py-16 font-mono text-sm sm:text-base md:text-2xl leading-loose">
               {lines.map((l, lineIdx) => {
                 const isActive = lineIdx === activeLine;
                 const isRevealed = lineIdx < activeLine;
@@ -173,7 +173,7 @@ const TypedLine = ({
     const slice = seg.text.slice(0, remaining);
     remaining -= slice.length;
     return (
-      <span key={i} style={{ color: seg.color, whiteSpace: 'pre' }}>
+      <span key={i} style={{ color: seg.color, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
         {slice}
       </span>
     );
@@ -218,14 +218,14 @@ const CodeLine = ({
   dim?: boolean;
   children: React.ReactNode;
 }) => (
-  <div className="flex items-start whitespace-nowrap min-h-[1.6em]">
+  <div className="flex items-start min-h-[1.6em]">
     <span
-      className="select-none w-7 md:w-10 shrink-0 text-right pr-3 md:pr-4 opacity-50"
+      className="select-none w-6 md:w-10 shrink-0 text-right pr-2 md:pr-4 opacity-50"
       style={{ color: MUTED, visibility: dim ? 'hidden' : 'visible' }}
     >
       {n}
     </span>
-    <span>{children}</span>
+    <span className="min-w-0 flex-1 break-words">{children}</span>
   </div>
 );
 
