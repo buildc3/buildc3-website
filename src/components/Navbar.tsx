@@ -24,8 +24,8 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
   }, [onSecretTrigger]);
 
   return (
-    <nav className="sticky top-0 z-50 bg-card shadow-sm">
-      <div className="mx-auto flex items-center gap-4 px-4 py-3 max-w-7xl">
+    <nav className="sticky top-0 z-50 w-full px-4 pt-4">
+      <div className="mx-auto flex max-w-6xl items-center gap-4 rounded-2xl border border-white/50 bg-[#d7d7d7]/80 px-6 py-3 shadow-[0_12px_32px_rgba(0,0,0,0.2)] backdrop-blur-md">
         <div className="flex items-center gap-3 shrink-0">
           <button onClick={handleLogoClick} className="shrink-0 select-none">
             <img src={logo} alt="BUILDC3" className="h-10 w-auto" />
@@ -41,29 +41,23 @@ export function Navbar({ search, onSearchChange, onSecretTrigger }: NavbarProps)
             value={search}
             onChange={e => onSearchChange(e.target.value)}
             placeholder="Search projects..."
-            className="pl-10 rounded-full bg-secondary border-none focus-visible:ring-primary"
+            className="pl-10 rounded-full bg-white/90 border border-white/70 focus-visible:ring-[#5c79ff]"
           />
         </div>
 
         <div className="flex items-center gap-6 shrink-0">
           <a
-            href="#lets-talk"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            href="#about"
+            className="text-sm font-medium text-slate-700/90 hover:text-slate-900 transition-colors"
           >
-            Let's Talk
+            About
           </a>
-          <a
-            href="/community"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+          <button
+            onClick={() => window.location.href = '/join-buildc3'}
+            className="px-4 py-2 rounded-full bg-[#5c79ff] text-white font-semibold hover:bg-[#4d6bff] transition-colors shadow-[0_8px_18px_rgba(58,90,255,0.35)]"
           >
-            Meet the Community
-          </a>
-          <a
-            href="#about-the-community"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
-            About the Community
-          </a>
+            Join BuildC3
+          </button>
         </div>
       </div>
     </nav>

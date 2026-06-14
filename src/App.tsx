@@ -8,6 +8,11 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import MeetCommunity from "./pages/MeetCommunity";
 import NotFound from "./pages/NotFound";
+import JoinBuildC3 from "./pages/JoinBuildC3";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Resources from "./pages/Resources";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +27,11 @@ const App = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/project/:id" element={<ProjectDetail />} />
           <Route path="/community" element={<MeetCommunity />} />
+          <Route path="/join-buildc3" element={<JoinBuildC3 />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/resources/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

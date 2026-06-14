@@ -1,18 +1,16 @@
 import type { Handler } from '@netlify/functions';
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(
-  'postgresql://neondb_owner:npg_lmzo32GCNadJ@ep-spring-bonus-am3k77ym-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
-);
+const sql = neon(process.env.DATABASE_URL!);
 
 async function ensureTable() {
   await sql`
     CREATE TABLE IF NOT EXISTS join_submissions (
-      id         SERIAL PRIMARY KEY,
+      id           SERIAL PRIMARY KEY,
       name         TEXT        NOT NULL,
       phone        TEXT        NOT NULL,
       email        TEXT        NOT NULL,
-      idea_brief   TEXT,
+      idea         TEXT,
       project_idea TEXT,
       why_join     TEXT,
       portfolio    TEXT,
@@ -20,36 +18,43 @@ async function ensureTable() {
       submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
-
-  await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS idea_brief TEXT`;
+  // Backfill columns for tables created by an older version of this function.
+  await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS idea TEXT`;
   await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS project_idea TEXT`;
   await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS why_join TEXT`;
   await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS portfolio TEXT`;
   await sql`ALTER TABLE join_submissions ADD COLUMN IF NOT EXISTS linkedin TEXT`;
 }
 
+interface JoinBody {
+  name?: string;
+  phone?: string;
+  email?: string;
+  idea?: string;
+  projectIdea?: string;
+  whyJoin?: string;
+  portfolio?: string;
+  linkedin?: string;
+}
+
+const clean = (v?: string) => {
+  const t = v?.trim();
+  return t ? t : null;
+};
+
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  let body: {
-    name?: string;
-    phone?: string;
-    email?: string;
-    ideaBrief?: string;
-    projectIdea?: string;
-    whyJoin?: string;
-    portfolio?: string;
-    linkedin?: string;
-  };
+  let body: JoinBody;
   try {
     body = JSON.parse(event.body ?? '{}');
   } catch {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
-  const { name, phone, email, ideaBrief, projectIdea, whyJoin, portfolio, linkedin } = body;
+  const { name, phone, email } = body;
 
   if (!name?.trim() || !phone?.trim() || !email?.trim()) {
     return {
@@ -62,25 +67,17 @@ export const handler: Handler = async (event) => {
     await ensureTable();
 
     await sql`
-      INSERT INTO join_submissions (
-        name,
-        phone,
-        email,
-        idea_brief,
-        project_idea,
-        why_join,
-        portfolio,
-        linkedin
-      )
+      INSERT INTO join_submissions
+        (name, phone, email, idea, project_idea, why_join, portfolio, linkedin)
       VALUES (
         ${name.trim()},
         ${phone.trim()},
         ${email.trim()},
-        ${ideaBrief?.trim() || null},
-        ${projectIdea?.trim() || null},
-        ${whyJoin?.trim() || null},
-        ${portfolio?.trim() || null},
-        ${linkedin?.trim() || null}
+        ${clean(body.idea)},
+        ${clean(body.projectIdea)},
+        ${clean(body.whyJoin)},
+        ${clean(body.portfolio)},
+        ${clean(body.linkedin)}
       )
     `;
 

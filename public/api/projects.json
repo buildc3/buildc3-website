@@ -1,11 +1,128 @@
 [
   {
+    "id": 10,
+    "title": "NeuroDB",
+    "description": "NeuroDB is an AI-powered PostgreSQL tool that lets you query and explore databases using natural language.",
+    "thumbnail_url": "/project_images/neurodb.png",
+    "external_link": "neurodb.buildc3.tech",
+    "star_point": "25k+ users",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 3,
+        "name": "AI/ML",
+        "display_order": 3,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Resume Forge",
+    "description": "Build professional resumes with ease",
+    "thumbnail_url": "/project_images/resume_forge.png",
+    "external_link": "resumeforge.buildc3.tech",
+    "star_point": "8k+ users",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
     "id": 15,
     "title": "DB-Viz",
     "description": "A database schema visualiser that lets you visually see the table structures and the interconnections",
     "thumbnail_url": "/project_images/dbviz.png",
     "external_link": "https://dbviz.buildc3.tech/",
     "created_at": "2026-05-05 22:02:56",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Omzee Portfolio",
+    "description": "The gorgeous 3D portfolio Website you might have seen",
+    "thumbnail_url": "/project_images/omzee_portfolio.png",
+    "external_link": "omzee.buildc3.tech",
+    "star_point": "2+ awards",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 4,
+        "name": "3D Sites",
+        "display_order": 4,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 5,
+        "name": "Portfolio",
+        "display_order": 5,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Rishi Portfolio",
+    "description": "A cool 3D portfolio built in the theme of Apple Vision Pro",
+    "thumbnail_url": "/project_images/rishi_portfolio.png",
+    "external_link": "rishi.buildc3.tech",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 4,
+        "name": "3D Sites",
+        "display_order": 4,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 5,
+        "name": "Portfolio",
+        "display_order": 5,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "PostPilot",
+    "description": "Lets you automate your LinkedIn postings. Save it the data / brief about your project or achievement and let it post for you.",
+    "thumbnail_url": "/project_images/postpilot.png",
+    "external_link": "https://postpilot.buildc3.tech/",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "ProjectNest",
+    "description": "ProjectNest is a Trello clone designed to enhance portfolio projects and tasks. It offers intuitive task management with drag-and-drop functionality.",
+    "thumbnail_url": "/project_images/project_nest.png",
+    "external_link": "projectnest.buildc3.tech",
+    "created_at": "2026-03-05T12:46:57.906Z",
     "categories": [
       {
         "id": 1,
@@ -80,28 +197,6 @@
     ]
   },
   {
-    "id": 2,
-    "title": "Rishi Portfolio",
-    "description": "A cool 3D portfolio built in the theme of Apple Vision Pro",
-    "thumbnail_url": "/project_images/rishi_portfolio.png",
-    "external_link": "rishi.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 4,
-        "name": "3D Sites",
-        "display_order": 4,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      },
-      {
-        "id": 5,
-        "name": "Portfolio",
-        "display_order": 5,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
     "id": 3,
     "title": "ContriHub",
     "description": "A platform to easily find the best codebase issues for you to solve, that match your level and interests.",
@@ -134,22 +229,6 @@
     ]
   },
   {
-    "id": 5,
-    "title": "PostPilot",
-    "description": "Lets you automate your LinkedIn postings. Save it the data / brief about your project or achievement and let it post for you.",
-    "thumbnail_url": "/project_images/postpilot.png",
-    "external_link": "https://postpilot.buildc3.tech/",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
     "id": 6,
     "title": "Arunodoy Portfolio",
     "description": "A cool Weblink styled portfolio of a developer",
@@ -157,44 +236,6 @@
     "external_link": "aruno.buildc3.tech",
     "created_at": "2026-03-05T12:46:57.906Z",
     "categories": [
-      {
-        "id": 5,
-        "name": "Portfolio",
-        "display_order": 5,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
-    "id": 7,
-    "title": "ProjectNest",
-    "description": "ProjectNest is a Trello clone designed to enhance portfolio projects and tasks. It offers intuitive task management with drag-and-drop functionality.",
-    "thumbnail_url": "/project_images/project_nest.png",
-    "external_link": "projectnest.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
-    "id": 8,
-    "title": "Omzee Portfolio",
-    "description": "The gorgeous 3D portfolio Website you might have seen",
-    "thumbnail_url": "/project_images/omzee_portfolio.png",
-    "external_link": "omzee.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 4,
-        "name": "3D Sites",
-        "display_order": 4,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      },
       {
         "id": 5,
         "name": "Portfolio",
@@ -215,44 +256,6 @@
         "id": 3,
         "name": "AI/ML",
         "display_order": 3,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
-    "id": 10,
-    "title": "NeuroDB",
-    "description": "NeuroDB is an AI-powered PostgreSQL tool that lets you query and explore databases using natural language.",
-    "thumbnail_url": "/project_images/neurodb.png",
-    "external_link": "neurodb.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      },
-      {
-        "id": 3,
-        "name": "AI/ML",
-        "display_order": 3,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "title": "Resume Forge",
-    "description": "Build professional resumes with ease",
-    "thumbnail_url": "/project_images/resume_forge.png",
-    "external_link": "resumeforge.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
         "created_at": "2026-03-05T12:46:57.906Z"
       }
     ]

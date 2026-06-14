@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import Spline from '@splinetool/react-spline';
-import logo from '@/assets/buildc3-logo.png';
+import { SiteHeader } from '@/components/SiteHeader';
+import { useProjects } from '@/hooks/useProjects';
+import { useCommunityMembers } from '@/hooks/useCommunityMembers';
 
 const Homepage = () => {
   const [viewportScale, setViewportScale] = useState(1);
+  const { data: projects = [] } = useProjects();
+  const { data: members = [] } = useCommunityMembers();
 
   useEffect(() => {
     const updateViewportScale = () => {
@@ -36,62 +40,90 @@ const Homepage = () => {
   const sceneSize = useMemo(() => `${100 / sceneScale}%`, [sceneScale]);
 
   return (
-    <main className="relative h-screen w-screen overflow-hidden">
-      {/* Header overlay above the Spline scene */}
-      <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-black/40 backdrop-blur-md border-b border-white/20">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="BUILDC3" className="h-9 w-auto" />
+    <main className="w-screen bg-background overflow-x-hidden">
+
+      {/* ── Hero section ── */}
+      <section className="relative h-screen w-full">
+
+        {/* Hero rounded box — inset on all sides */}
+        <div className="absolute inset-6 rounded-[2rem] overflow-hidden">
+          <div
+            className="absolute left-1/2 top-1/2"
+            style={{
+              width: sceneSize,
+              height: sceneSize,
+              transform: `translate(-50%, -50%) scale(${sceneScale})`,
+              transformOrigin: 'center center',
+              willChange: 'transform',
+            }}
+          >
+            <Spline scene="https://prod.spline.design/0cyEg1aPz0Si15tV/scene.splinecode" />
+          </div>
         </div>
 
-        <nav className="flex items-center gap-7">
-          <a
-            href="#lets-talk"
-            className="text-sm font-medium text-white/90 hover:text-white transition-colors"
-          >
-            Let's Talk
-          </a>
-          <a
-            href="/community"
-            className="text-sm font-medium text-white/90 hover:text-white transition-colors"
-          >
-            Meet the Community
-          </a>
-          <a
-            href="#about-the-community"
-            className="text-sm font-medium text-white/90 hover:text-white transition-colors"
-          >
-            About the Community
-          </a>
-        </nav>
-      </header>
+        {/* Header overlaid on top of the hero box */}
+        <SiteHeader position="overlay" />
 
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="absolute left-1/2 top-1/2"
-          style={{
-            width: sceneSize,
-            height: sceneSize,
-            transform: `translate(-50%, -50%) scale(${sceneScale})`,
-            transformOrigin: 'center center',
-            willChange: 'transform',
-          }}
-        >
-          <Spline scene="https://prod.spline.design/0cyEg1aPz0Si15tV/scene.splinecode" />
+      </section>
+
+      {/* ── Cards section ── */}
+      <section className="mx-auto max-w-6xl px-6 pb-16 pt-6 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-5">
+
+        {/* Left card — Community in Action / stats */}
+        <div className="rounded-[1.75rem] border border-[#9F8064]/30 p-8 flex flex-col justify-between min-h-[280px]" style={{ background: 'linear-gradient(to top, #9B795D 0%, #BBAB8D 100%)' }}>
+          {/* Top label */}
+          <div className="flex items-start justify-between">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
+              Our Community in Action
+            </p>
+            {/* Top-right image */}
+            <img
+              src="/left_card_sphere_image.png"
+              alt=""
+              className="w-32 h-32 object-contain -mt-2 -mr-2 opacity-90"
+              draggable={false}
+            />
+          </div>
+
+          {/* Stats row */}
+          <div className="flex items-end gap-10 mt-auto">
+            <div>
+              <p className="text-5xl font-bold text-white leading-none">
+                {projects.length > 0 ? `${projects.length}+` : '15+'}
+              </p>
+              <p className="text-sm text-[#f5ede4]/80 font-medium mt-1">Projects Shipped</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-white leading-none">40k+</p>
+              <p className="text-sm text-[#f5ede4]/80 font-medium mt-1">Users</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Footer overlay */}
-      <footer className="absolute bottom-0 left-0 right-0 z-50 flex items-center justify-end px-6 py-2.5 bg-black/40 backdrop-blur-md border-t border-white/20">
-        <a
-          href="https://www.netlify.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 rounded-full border border-white/30 bg-black/50 backdrop-blur-md px-4 py-1.5 text-white/90 hover:text-white hover:bg-black/60 hover:border-white/50 transition-all"
-        >
-          <img src="/images.png" alt="Netlify" className="h-4 w-4 rounded-full" />
-          <span className="text-sm font-medium">Hosting by Netlify</span>
-        </a>
-      </footer>
+        {/* Right card — What is BuildC3 */}
+        <div className="rounded-[1.75rem] bg-background border border-[#9F8064]/25 p-8 flex flex-col justify-between min-h-[280px] shadow-[0_4px_24px_rgba(159,128,100,0.1)]">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground mb-1">
+              What is <span className="text-[#9F8064]">BuildC3</span>
+            </h2>
+            <div className="h-px bg-[#9F8064]/20 my-4" />
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              BuildC3 started with a simple frustration — too many great ideas never ship. Talented people with real product vision get stuck waiting for the right team, the right time, or the right resources.
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Our mission is to compress the time between idea and impact. We bring together builders, designers, and operators who are serious about shipping — and give them everything they need to go from 0 to live in two weeks.
+            </p>
+          </div>
+          <a
+            href="/about"
+            className="mt-6 self-start inline-flex items-center gap-2 rounded-full bg-[#9F8064] text-white text-sm font-semibold px-5 py-2.5 hover:bg-[#8a6d54] transition-colors"
+          >
+            About community →
+          </a>
+        </div>
+
+      </section>
+
     </main>
   );
 };

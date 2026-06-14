@@ -1,0 +1,39 @@
+{
+  "members": [
+    {
+      "id": "1",
+      "name": "Siddharth",
+      "role": "Director of Photography",
+      "description": "Capturing moments that tell stories. Passionate about visual storytelling and cinematic excellence.",
+      "image_path": "/siddharth.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Rishi",
+      "role": "Lead Front-End",
+      "description": "Crafting pixel-perfect interfaces. Turning designs into delightful user experiences.",
+      "image_path": "/rishi.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Om",
+      "role": "Founder",
+      "description": "Building products that matter. Obsessed with shipping fast and creating impact in the community.",
+      "image_path": "/Om.PNG"
+    },
+    {
+      "id": "4",
+      "name": "Shubham",
+      "role": "Business Planner",
+      "description": "Bridging vision and execution. Ensuring every feature delivers real value to users.",
+      "image_path": "/shubham.png"
+    },
+    {
+      "id": "5",
+      "name": "Aditya",
+      "role": "AI Lead",
+      "description": "Where technology meets design. Building systems that scale and interfaces that inspire.",
+      "image_path": "/Aditya.png"
+    }
+  ]
+}
