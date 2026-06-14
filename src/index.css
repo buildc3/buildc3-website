@@ -149,26 +149,6 @@ body {
   scrollbar-width: none;
 }
 
-@keyframes floaty {
-  0% {
-    transform: translateY(-6px);
-  }
-  50% {
-    transform: translateY(6px);
-  }
-  100% {
-    transform: translateY(-6px);
-  }
-}
-
-.floaty {
-  animation: floaty 4.6s ease-in-out infinite;
-}
-
-.floaty-slow {
-  animation: floaty 6.4s ease-in-out infinite;
-}
-
 /* ===== Parallax Project Slider ===== */
 .parallax-container {
   position: fixed;
