@@ -44,9 +44,9 @@ const services: ServiceCard[] = [
   },
   {
     id: '4',
-    title: '3D Modelling & Animation',
-    description: 'Bring your ideas to life with stunning 3D visuals, product renders, and cinematic animations.',
-    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
+    title: 'Fixing Your Vibe Coded Application',
+    description: 'Built your app with vibe coding? Before you go live, ask yourself — is it really ready to handle the stress you plan to bring on, and is it fully security optimised? Let us fix that and make your application truly production ready.',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
   },
   {
     id: '5',
