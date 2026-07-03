@@ -133,22 +133,6 @@
     ]
   },
   {
-    "id": 14,
-    "title": "Indic Transliterator",
-    "description": "",
-    "thumbnail_url": "/project_images/indic-transliterator.png",
-    "external_link": "https://indic-transliteration.buildc3.tech",
-    "created_at": "2026-04-10T10:43:06.069Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
     "id": 13,
     "title": "Yash Portfolio",
     "description": "A cool web portfolio",
@@ -181,22 +165,6 @@
     ]
   },
   {
-    "id": 1,
-    "title": "StepForces",
-    "description": "Empowering gym enthusiasts, one footstep at a time, with performance tracking RSA Problems.",
-    "thumbnail_url": "/project_images/stepforces.png",
-    "external_link": "stepforces.buildc3.tech",
-    "created_at": "2026-03-05T12:46:57.906Z",
-    "categories": [
-      {
-        "id": 1,
-        "name": "WebApps",
-        "display_order": 1,
-        "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
     "id": 3,
     "title": "ContriHub",
     "description": "A platform to easily find the best codebase issues for you to solve, that match your level and interests.",
@@ -219,6 +187,147 @@
     "thumbnail_url": "/project_images/echodcrypt.png",
     "external_link": "echodcrypt.buildc3.tech",
     "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Voltix Drinks Website",
+    "description": "A cool drinks company web design! A cool website makes your drink a lot more cooler!!",
+    "thumbnail_url": "/project_images/voltix-website-product-flavors--20260618-032023.png",
+    "external_link": "voltix-energy.buildc3.tech",
+    "created_at": "2026-06-18T03:20:23.000Z",
+    "categories": [
+      {
+        "id": 6,
+        "name": "Mock Websites",
+        "display_order": 0,
+        "created_at": "2026-03-05T15:38:18.019Z"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "DietBuddy",
+    "description": "AI-powered nutrition tracker. Snap your food, get instant macro analysis with calories, protein, fat & fiber.",
+    "thumbnail_url": "/project_images/dietbuddy.png",
+    "external_link": "https://dietbuddy.buildc3.tech/",
+    "created_at": "2026-07-03T10:00:00.000Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 3,
+        "name": "AI/ML",
+        "display_order": 3,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Perfume Mockup",
+    "description": "Luxury perfume e-commerce website mockup with elegant design, fragrance collections, and scent quiz.",
+    "thumbnail_url": "/project_images/perfumemockup.png",
+    "external_link": "https://perfumemockup.buildc3.tech/",
+    "created_at": "2026-07-03T10:00:00.000Z",
+    "categories": [
+      {
+        "id": 6,
+        "name": "Mock Websites",
+        "display_order": 0,
+        "created_at": "2026-03-05T15:38:18.019Z"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Cadence",
+    "description": "Language learning platform with real conversations from day one and culture integrated into every lesson.",
+    "thumbnail_url": "/project_images/cadence.png",
+    "external_link": "https://cadence.buildc3.tech/",
+    "created_at": "2026-07-03T10:00:00.000Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Le Croissant",
+    "description": "Artisan bakery website mockup featuring laminated croissants, pastries, and a beautiful seasonal menu.",
+    "thumbnail_url": "/project_images/le-croissant.png",
+    "external_link": "https://le-croissant.buildc3.tech/",
+    "created_at": "2026-07-03T10:00:00.000Z",
+    "categories": [
+      {
+        "id": 6,
+        "name": "Mock Websites",
+        "display_order": 0,
+        "created_at": "2026-03-05T15:38:18.019Z"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "BillsBot",
+    "description": "Telegram bot that reads bills via AI, organizes them, and exports clean Excel reports for accounting.",
+    "thumbnail_url": "/project_images/billsbot.png",
+    "external_link": "https://billsbot.buildc3.tech/",
+    "star_point": "3.5k+ users",
+    "created_at": "2026-07-03T10:00:00.000Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 3,
+        "name": "AI/ML",
+        "display_order": 3,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "StepForces",
+    "description": "Empowering gym enthusiasts, one footstep at a time, with performance tracking RSA Problems.",
+    "thumbnail_url": "/project_images/stepforces.png",
+    "external_link": "stepforces.buildc3.tech",
+    "created_at": "2026-03-05T12:46:57.906Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Indic Transliterator",
+    "description": "",
+    "thumbnail_url": "/project_images/indic-transliterator.png",
+    "external_link": "https://indic-transliteration.buildc3.tech",
+    "created_at": "2026-04-10T10:43:06.069Z",
     "categories": [
       {
         "id": 1,
@@ -257,22 +366,6 @@
         "name": "AI/ML",
         "display_order": 3,
         "created_at": "2026-03-05T12:46:57.906Z"
-      }
-    ]
-  },
-  {
-    "id": 16,
-    "title": "Voltix Drinks Website",
-    "description": "A cool drinks company web design! A cool website makes your drink a lot more cooler!!",
-    "thumbnail_url": "/project_images/voltix-website-product-flavors--20260618-032023.png",
-    "external_link": "voltix-energy.buildc3.tech",
-    "created_at": "2026-06-18T03:20:23.000Z",
-    "categories": [
-      {
-        "id": 6,
-        "name": "Mock Websites",
-        "display_order": 0,
-        "created_at": "2026-03-05T15:38:18.019Z"
       }
     ]
   }
