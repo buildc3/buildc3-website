@@ -2,10 +2,10 @@
   "members": [
     {
       "id": "1",
-      "name": "Siddharth",
-      "role": "Director of Photography",
-      "description": "Capturing moments that tell stories. Passionate about visual storytelling and cinematic excellence.",
-      "image_path": "/siddharth.jpg"
+      "name": "Arka",
+      "role": "Software Developer",
+      "description": "Building robust solutions with clean, efficient code. Passionate about solving complex problems through software.",
+      "image_path": "/arka.jpeg"
     },
     {
       "id": "3",
