@@ -71,12 +71,34 @@ interface TeamShowcaseProps {
 export default function TeamShowcase({ members = DEFAULT_MEMBERS, className, heading, description }: TeamShowcaseProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Center column holds a single member (the founder); the rest split evenly left/right.
-  const centerIndex = Math.floor(members.length / 2);
-  const col2 = members.filter((_, i) => i === centerIndex);
-  const sideMembers = members.filter((_, i) => i !== centerIndex);
-  const col1 = sideMembers.filter((_, i) => i % 2 === 0);
-  const col3 = sideMembers.filter((_, i) => i % 2 === 1);
+  const getMemberByName = (name: string) =>
+    members.find(member => member.name.toLowerCase() === name.toLowerCase());
+
+  const buildC3Columns = {
+    left: ['Shubham', 'Arka'].map(getMemberByName),
+    center: ['Om', 'Neha'].map(getMemberByName),
+    right: ['Aditya', 'Rishi'].map(getMemberByName),
+  };
+
+  const hasBuildC3TeamLayout = [
+    ...buildC3Columns.left,
+    ...buildC3Columns.center,
+    ...buildC3Columns.right,
+  ].every(Boolean);
+
+  const fallbackCenterIndex = Math.floor(members.length / 2);
+  const fallbackCenter = members.filter((_, i) => i === fallbackCenterIndex);
+  const fallbackSideMembers = members.filter((_, i) => i !== fallbackCenterIndex);
+
+  const col1 = hasBuildC3TeamLayout
+    ? buildC3Columns.left as TeamMember[]
+    : fallbackSideMembers.filter((_, i) => i % 2 === 0);
+  const col2 = hasBuildC3TeamLayout
+    ? buildC3Columns.center as TeamMember[]
+    : fallbackCenter;
+  const col3 = hasBuildC3TeamLayout
+    ? buildC3Columns.right as TeamMember[]
+    : fallbackSideMembers.filter((_, i) => i % 2 === 1);
 
   const hoveredMember = hoveredId ? members.find(m => m.id === hoveredId) : null;
 
