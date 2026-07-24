@@ -292,7 +292,7 @@ export function CinematicHero({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=10000",
+          end: deviceType === 'teamShowcase' ? "+=6000" : "+=10000",
           pin: true,
           scrub: 2,
           anticipatePin: 1,
