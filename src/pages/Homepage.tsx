@@ -105,6 +105,13 @@ const Homepage = () => {
               <p className="text-sm text-[#f5ede4]/80 font-medium mt-1">Users</p>
             </div>
           </div>
+
+          <a
+            href="/projects"
+            className="mt-6 self-start inline-flex items-center gap-2 rounded-full bg-white text-[#9F8064] text-sm font-semibold px-5 py-2.5 hover:bg-[#f5ede4] transition-colors"
+          >
+            Our Work →
+          </a>
         </div>
 
         {/* Right card — What is BuildC3 */}
