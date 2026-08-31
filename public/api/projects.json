@@ -407,5 +407,27 @@
         "created_at": "2026-03-05T12:46:57.906Z"
       }
     ]
+  },
+  {
+    "id": 24,
+    "title": "NeuroDB-Web",
+    "description": "The Power of NeuroDB on your web. Connect and Query your Databases from a web directly.",
+    "thumbnail_url": "/project_images/neurodb-web.png",
+    "external_link": "https://neurodb-web.buildc3.tech",
+    "created_at": "2026-08-31T00:00:00.000Z",
+    "categories": [
+      {
+        "id": 1,
+        "name": "WebApps",
+        "display_order": 1,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      },
+      {
+        "id": 3,
+        "name": "AI/ML",
+        "display_order": 3,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
   }
 ]
