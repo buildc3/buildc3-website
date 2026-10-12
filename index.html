@@ -89,7 +89,22 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawlable fallback: replaced by the React app on load -->
+      <main style="font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:96px 24px;text-align:center">
+        <h1>BuildC3 — Builders &amp; Developers Community</h1>
+        <p>Build in the community, with the community, and for the community. Real people. Real projects. A growing community of builders and developers.</p>
+        <nav aria-label="Main">
+          <a href="/about">About</a> ·
+          <a href="/services">Services</a> ·
+          <a href="/projects">Our Work</a> ·
+          <a href="/resources">Resources</a> ·
+          <a href="/community">Community</a> ·
+          <a href="/contact">Contact</a> ·
+          <a href="/join-buildc3">Join BuildC3</a>
+        </nav>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

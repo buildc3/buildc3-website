@@ -153,6 +153,7 @@ const Homepage = () => {
         </section>
       ) : (
         <section className="relative h-screen w-full">
+          <h1 className="sr-only">BuildC3 — Builders &amp; Developers Community. Build in the community, with the community, and for the community.</h1>
 
           {/* Hero rounded box — inset on all sides */}
           <div className="absolute inset-6 rounded-[2rem] overflow-hidden">
