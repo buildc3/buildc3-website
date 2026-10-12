@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Patrick+Hand&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -474,4 +474,14 @@ body {
   opacity: var(--active, 0);
   transition: opacity 300ms;
   pointer-events: none;
+}
+
+@keyframes peep-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes peep-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }

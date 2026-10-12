@@ -17,9 +17,11 @@ interface SiteHeaderProps {
   /** Secret logo-click handler (5 rapid clicks → admin panel) */
   onLogoSecret?: () => void;
   position?: 'sticky' | 'overlay';
+  /** Keep the logo's layout slot but hide it (a flying logo animates into it) */
+  hideLogo?: boolean;
 }
 
-export function SiteHeader({ onLogoSecret, position = 'sticky' }: SiteHeaderProps) {
+export function SiteHeader({ onLogoSecret, position = 'sticky', hideLogo = false }: SiteHeaderProps) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const clickTimestamps = useRef<number[]>([]);
@@ -55,7 +57,7 @@ export function SiteHeader({ onLogoSecret, position = 'sticky' }: SiteHeaderProp
             className="shrink-0 select-none justify-self-start"
             aria-label="Go to homepage"
           >
-            <img src={logo} alt="BUILDC3" className="h-10 w-auto" />
+            <img src={logo} alt="BUILDC3" data-header-logo className={cn('h-10 w-auto', hideLogo && 'invisible')} />
           </button>
 
           {/* Nav links — centered (hidden on mobile) */}
