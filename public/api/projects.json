@@ -57,6 +57,22 @@
     ]
   },
   {
+    "id": 25,
+    "title": "OptHelper",
+    "description": "A free macOS app that puts your MacBook's notch to work. Hover to open a small island with a turntable for what's playing, a shelf for dragging files between apps, and an AI launcher on ⌥ Space that opens apps, links and terminal shortcuts from a plain-language request.",
+    "thumbnail_url": "/project_images/opt-helper.png",
+    "external_link": "https://opthelper.buildc3.tech/",
+    "created_at": "2026-10-15T00:00:00.000Z",
+    "categories": [
+      {
+        "id": 3,
+        "name": "AI/ML",
+        "display_order": 3,
+        "created_at": "2026-03-05T12:46:57.906Z"
+      }
+    ]
+  },
+  {
     "id": 8,
     "title": "Omzee Portfolio",
     "description": "The gorgeous 3D portfolio Website you might have seen",
