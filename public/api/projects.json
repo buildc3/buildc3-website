@@ -410,10 +410,10 @@
   },
   {
     "id": 23,
-    "title": "Desk Draw",
-    "description": "Run the whole draw, from first entry to published bracket. DrawDesk keeps registrations, confirmed entries, seeding and brackets in one workflow — so the draw you publish is the draw you intended.",
-    "thumbnail_url": "/project_images/deskdraw.png",
-    "external_link": "https://drawdesk.buildc3.tech",
+    "title": "Seed and Stage",
+    "description": "Badminton tournament draw and registration software. Build the registration form, collect entries online, seed by drag and drop, generate single-elimination or round-robin draws, and publish the draw you intended with one shareable link.",
+    "thumbnail_url": "/project_images/seed-and-stage.jpg",
+    "external_link": "https://seed-stage.buildc3.tech",
     "created_at": "2026-08-31T00:00:00.000Z",
     "categories": [
       {
