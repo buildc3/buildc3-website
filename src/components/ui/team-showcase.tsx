@@ -75,7 +75,7 @@ export default function TeamShowcase({ members = DEFAULT_MEMBERS, className, hea
     members.find(member => member.name.toLowerCase() === name.toLowerCase());
 
   const buildC3Columns = {
-    left: ['Shubham', 'Arka'].map(getMemberByName),
+    left: ['Shubham'].map(getMemberByName),
     center: ['Om', 'Neha'].map(getMemberByName),
     right: ['Aditya', 'Rishi'].map(getMemberByName),
   };

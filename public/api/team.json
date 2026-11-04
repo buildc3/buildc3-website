@@ -1,13 +1,6 @@
 {
   "members": [
     {
-      "id": "1",
-      "name": "Arka",
-      "role": "Software Developer",
-      "description": "Building robust solutions with clean, efficient code. Passionate about solving complex problems through software.",
-      "image_path": "/arka.jpeg"
-    },
-    {
       "id": "3",
       "name": "Rishi",
       "role": "AI Wizard",
