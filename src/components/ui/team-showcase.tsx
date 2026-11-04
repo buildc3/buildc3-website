@@ -75,9 +75,9 @@ export default function TeamShowcase({ members = DEFAULT_MEMBERS, className, hea
     members.find(member => member.name.toLowerCase() === name.toLowerCase());
 
   const buildC3Columns = {
-    left: ['Shubham'].map(getMemberByName),
-    center: ['Om', 'Neha'].map(getMemberByName),
-    right: ['Aditya', 'Rishi'].map(getMemberByName),
+    left: ['Shubham', 'Rishi'].map(getMemberByName),
+    center: ['Om'].map(getMemberByName),
+    right: ['Aditya', 'Neha'].map(getMemberByName),
   };
 
   const hasBuildC3TeamLayout = [
@@ -120,7 +120,7 @@ export default function TeamShowcase({ members = DEFAULT_MEMBERS, className, hea
         </div>
 
         {/* Column 2 */}
-        <div className="flex flex-col gap-2 md:gap-3 mt-[48px] sm:mt-[56px] md:mt-[68px]">
+        <div className="flex flex-col gap-2 md:gap-3 self-center">
           {col2.map((member) => (
             <PhotoCard
               key={member.id}
